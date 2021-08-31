@@ -1,5 +1,6 @@
 ---
 title: "What is this 'no newline at end of file'"
+last_modified_at: 2021-08-31 12:00:00 +0200
 toc: true
 categories:
   - Development
@@ -53,6 +54,7 @@ insert_final_newline = true
 * [Most editors](https://editorconfig.org/#pre-installed) will consider the settings in `.editorconfig` without any further action needed.
 * Added to git it is shared with your coworkers without any further action
 
-So while using Android Studio it will automatically insert a newline in any file you modify and save. 
+So while using Android Studio it will automatically insert a newline in any file you modify and save.  
+(Please make sure that the bundled Plugin *EditorConfig* is not disabled - should be enabled by default 😉) 
 
 Visual Studio Code requires an additional [plugin](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to get this feature.
