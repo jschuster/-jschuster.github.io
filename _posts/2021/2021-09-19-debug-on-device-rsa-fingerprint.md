@@ -4,6 +4,7 @@ toc: true
 categories:
   - Development
 tags:
+  - android
   - debug
   - terminal
 ---
