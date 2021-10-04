@@ -25,10 +25,11 @@ github: [metadata] # silence error: 'GitHub Metadata: No GitHub API authenticati
 minimal_mistakes_skin: default
 repository: jschuster/jschuster.github.io
 search: true
+url: https://joachimschuster.de
 
 # Build settings
 markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
+theme: minimal-mistakes-jekyll
 # Outputting
 permalink: /posts/:title/
 paginate: 5 # amount of posts to show
