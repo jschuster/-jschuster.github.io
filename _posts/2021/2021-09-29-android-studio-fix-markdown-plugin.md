@@ -43,7 +43,7 @@ So here are the steps to change the JBR in Android Studio:
 
 - In Android Studio open `Preferences...` > `Plugins` and install the plugin "Choose Runtime" (no restart required)
 
-- open menu `Help` > `Find Action...` (`shift` + `cmd` + `A`) and search for "Choose Runtime..." and execute
+- open menu `Help` > `Find Action...` (<kbd>shift</kbd> + <kbd>cmd</kbd> + <kbd>A</kbd>) and search for "Choose Runtime..." and execute
 
 - In the dialog press `...` and select the folder you extracted the JBR to (in case of the folder *~/Library/Java/...* it might be easier to open it in the Finder and drag and drop it into the dialog)
   ![Choose Runtime dialog with custom jbr](../../assets/images/2021/2021-09-29-android-studio-dialog-choose-runtime-custom-jbr.png)

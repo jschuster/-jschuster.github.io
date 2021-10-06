@@ -2,9 +2,30 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
+// Make sure color overwrites are before the imports
+
 $code-background-color: #f0f0f0 !default;
 
 @charset "utf-8";
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+p > kbd,
+a > kbd,
+li > kbd,
+figcaption > kbd,
+td > kbd {
+  padding: 0.2rem;
+  font-family: $global-font-family;
+  font-size: 0.8em;
+  background: $code-background-color;
+  border-radius: $border-radius;
+  border: 1px solid mix(#000, $code-background-color, 25%);
+
+  &:before,
+  &:after {
+    letter-spacing: -0.2em;
+    content: "\00a0"; /* non-breaking space*/
+  }
+}
