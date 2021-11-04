@@ -119,4 +119,4 @@ tag_archive:
 jekyll_analytics:
   Plausible:
     domain: 'joachimschuster.de'   # The domain configured in plausible
-    source: 'https://plausible.io/js/plausible.js' # The source of the javascript
+    source: 'https://plausible.joachimschuster.de/js/plausible.js' # The source of the javascript
