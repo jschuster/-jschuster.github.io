@@ -4,8 +4,7 @@ toc: true
 categories:
   - Development
 tags:
-  - ide
-  - android
+  - android-studio
   - terminal
 ---
 
@@ -15,7 +14,7 @@ But after installing the Plugin you will see the editor with some nice coloring 
 
 ![Markdown Editor without preview pane](../../assets/images/2021/2021-09-29-android-studio-editor-markdown-without-preview.png)
 
-Also the Markdown preferences only show an error message.
+Also the **Markdown** preferences only show an error message.
 
 ![Markdown Preferences empty preference view](../../assets/images/2021/2021-09-29-android-studio-preferences-markdown-empty.png)
 
@@ -41,11 +40,11 @@ So here are the steps to change the JBR in Android Studio:
   tar -xzf $file -C $dir --strip-components=1
   ```
 
-- In Android Studio open `Preferences...` > `Plugins` and install the plugin "Choose Runtime" (no restart required)
+- In Android Studio open **Preferences...** > **Plugins** and install the plugin "Choose Runtime" (no restart required)
 
-- open menu `Help` > `Find Action...` (<kbd>shift</kbd> + <kbd>cmd</kbd> + <kbd>A</kbd>) and search for "Choose Runtime..." and execute
+- open menu **Help** > **Find Action...** (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>A</kbd>) and search for "Choose Runtime..." and execute
 
-- In the dialog press `...` and select the folder you extracted the JBR to (in case of the folder *~/Library/Java/...* it might be easier to open it in the Finder and drag and drop it into the dialog)
+- In the dialog press **...** and select the folder you extracted the JBR to (in case of the folder *~/Library/Java/...* it might be easier to open it in the Finder and drag and drop it into the dialog)
   ![Choose Runtime dialog with custom jbr](../../assets/images/2021/2021-09-29-android-studio-dialog-choose-runtime-custom-jbr.png)
   
 - Install it - Android Studio will restart
@@ -61,7 +60,7 @@ After restarting Android Studio, the Markdown plugin will be fully functional.
 Enable Mermaid in the Markdown Preferences to support [Mermaid diagrams](https://mermaid-js.github.io/) in your Markdown documents.
 If you haven't heard of Mermaid yet, take a look at the [examples](https://mermaid-js.github.io/mermaid/#/examples) to get an idea of what is possible with Mermaid.
 
-To enable the rendering of Mermaid diagrams, open `Preferences...` > `Languages & Frameworks` > `Markdown` and set the checkbox at *Mermaid*.
+To enable the rendering of Mermaid diagrams, open **Preferences...** > **Languages & Frameworks** > **Markdown** and set the checkbox at *Mermaid*.
 
 ![Markdown Preferences activate Mermaid support](../../assets/images/2021/2021-09-29-android-studio-preferences-markdown-mermaid.png)
 

@@ -4,7 +4,7 @@ toc: true
 categories:
   - Development
 tags:
-  - android
+  - android-studio
   - terminal
 ---
 
@@ -16,7 +16,7 @@ So integrating Android Studio with SourceTree as a diff and merge tool only requ
 
 ## Install command line launcher
 
-In Android Studio open menu `Tools` > `Create Command Line Launcher…` and confirm the installation to the default location with `OK`.
+In Android Studio open menu **Tools** > **Create Command Line Launcher…** and confirm the installation to the default location with **OK**.
 
 ![Android Studio Command-Line Launcher](../../assets/images/2021/2021-10-06-android-studio-command-line-launcher-installer.png)
 
@@ -38,14 +38,14 @@ So for example you can compare two files by
 studio diff first.txt second.txt
 ```
 
-Integration with SauceTree is now simply setting the *External Visual Diff Tool* to `Custom…`  and *Diff Command* to `/usr/local/bin/studio`.
-The *Arguments* must be set to
+Integration with SauceTree is now simply setting the **External Visual Diff Tool** to **Custom…**  and **Diff Command** to `/usr/local/bin/studio`.
+The **Arguments** must be set to
 
 ```bash
 diff $LOCAL $REMOTE
 ```
 
-The same applies to the *Merge Tool*, but with the *Arguments*:
+The same applies to the **Merge Tool**, but with the **Arguments**:
 
 ```bash
 merge $LOCAL $REMOTE $BASE $MERGED
@@ -57,11 +57,11 @@ The Result should look like this
 
 
 
-Now select a modified file in SauceTree and apply `External Diff` to it. Android Studio opens a extra diff window like this:
+Now select a modified file in SauceTree and apply **External Diff** to it. Android Studio opens a extra diff window like this:
 
 ![Android Studio Diff View](../../assets/images/2021/2021-10-06-android-studio-diff-view.png)
 
-Also in case of a merge conflict, you can use *Resolve Conflicts* > *Start External Merge Tool* to bring up a merge window where you can systematically resolve the conflictl.
+Also in case of a merge conflict, you can use **Resolve Conflicts** > **Start External Merge Tool** to bring up a merge window where you can systematically resolve the conflictl.
 
 ## Configure Git command line
 Have a look at your gitconfig - you may want to use your new studio command line launcher to edit the file  😉

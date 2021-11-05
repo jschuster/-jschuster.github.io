@@ -3,6 +3,7 @@ title: "Android Studio manage Gradle JDKs"
 categories:
   - Development
 tags:
+  - android-studio
   - android
   - gradle
   - java
@@ -23,15 +24,15 @@ Handling your JDK differently was already possible but a little knowledge, tools
 
 But now there is a nice JDK configuration integrated in the Android Studio preferences.
 
-Open `Preferences...`, navigate to `Build, Execution, Deployment` > `Build Tools` > `Gradle`
+Open **Preferences...**, navigate to **Build, Execution, Deployment** > **Build Tools** > **Gradle**
 
-In the menu `Grade JDK:` you can see the currently selected JDK for the current project. From this menu you can select the other JDKs found. Or you can Download a new one with `Download JDK...`.
+In the menu **Grade JDK:** you can see the currently selected JDK for the current project. From this menu you can select the other JDKs found. Or you can Download a new one with **Download JDK...**.
 
 ![Android Studio Preferences Gradle JDK](../../assets/images/2021/2021-08-28-android_studio_preferences_gradle_jdk.png)
 
 
 
-Form the dialog you can select your `Version` and your `Vendor` and the `Location` to install the JDK to.
+Form the dialog you can select your **Version** and your **Vendor** and the **Location** to install the JDK to.
 
 ![2021-08-28-android_studio_preferences_gradle_jdk_download](../../assets/images/2021/2021-08-28-android_studio_preferences_gradle_jdk_download.png)
 

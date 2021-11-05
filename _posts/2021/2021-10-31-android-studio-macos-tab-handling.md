@@ -1,12 +1,12 @@
 ---
-title: "Tabs for Android Studio (and other apps) on Mac" 
+title: "Tabs for Android Studio (and other apps) on a Mac" 
 toc: true
 categories:
   - Development
 tags:
   - macos
+  - android-studio
   - helpful
-  - android
 ---
 
 Those who have learned to love working with tabs instead of individual windows in Safari, for example, may want to use this in other apps as well. Finder and many other Mac apps support tabs, some better, some worse. Since macOS Mojave 10.14 at the latest, the behavior of all apps can be set in the [General System Preferences](https://support.apple.com/en-nz/guide/mac-help/mchla4695cce). Here you can specify when macOS should "convince" an app to first use tabs instead of windows.
@@ -68,5 +68,4 @@ You can now set the behavior for all apps individually. Of course, you can also 
 ```
 defaults write com.apple.finder AppleWindowTabbingMode -string "manual"
 ```
-
 </div>

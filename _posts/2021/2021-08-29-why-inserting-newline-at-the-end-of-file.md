@@ -34,7 +34,7 @@ The only way to silence the tools is to insert a `<newline>` at the end of the f
 
 ### For Android Studio
 
-Set the following checkbox in `Preferences...` > `Editor` > `General` > `Ensure every saved file ends with a line break`
+Set the following checkbox in **Preferences...** > **Editor** > **General** > **Ensure every saved file ends with a line break**
 
 ![Android Studio Preferences, Editor, General](../../assets/images/2021/2021-08-29-android-studio-preferences-editor-general-einsure-line-break_png.png)
 
