@@ -18,7 +18,7 @@ The tools are located deep in the paths of the Android SDK like `/Users/joachim/
 Add the following lines to your `~/.zshrc`.
 
 ```bash
-export ANDROID_SDK_ROOT=/Users/$USER/Library/Android/sdk
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
 export PATH=${PATH}:$ANDROID_SDK_ROOT/emulator
 export PATH=${PATH}:$ANDROID_SDK_ROOT/tools
 export PATH=${PATH}:$ANDROID_SDK_ROOT/platform-tools
