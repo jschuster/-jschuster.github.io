@@ -1,5 +1,6 @@
 ---
 title: "Fix Markdown Plugin in Android Studio Arctic Fox 2020.3.1" 
+last_modified_at: 2022-07-31 12:00:00 +0200
 toc: true
 categories:
   - Development
@@ -7,6 +8,8 @@ tags:
   - android-studio
   - terminal
 ---
+
+**Update 31.07.2022:** Chipmunk has this problem again. You can find a slightly adapted tutorial for this Android Studio version in my post: [Fix Markdown Plugin in Android Studio Chipmunk 2021.2.1]({{ site.baseurl }}{% link _posts/2022/2022-07-31-android-studio-fix-markdown-plugin-again.md%})
 
 When editing a Markdown file, Android Studio suggests installing the [Markdown Plugin](https://plugins.jetbrains.com/plugin/7793-markdown). The [IntelliJ IDEA 2020.3 Doku](https://www.jetbrains.com/help/idea/2020.3/markdown.html)  (Android Studio Arctic Fox 2020.3.1 is based on that version)  shows some nice shortcuts and screenshots.
 
@@ -64,6 +67,6 @@ To enable the rendering of Mermaid diagrams, open **Preferences...** > **Languag
 
 ![Markdown Preferences activate Mermaid support](../../assets/images/2021/2021-09-29-android-studio-preferences-markdown-mermaid.png)
 
-Using a code bock with Mermaid syntax will be rendered in the preview pane.
+Using a code block with Mermaid syntax will be rendered in the preview pane.
 
 ![Markdown Editor with Mermaid preview](../../assets/images/2021/2021-09-29-android-studio-editor-markdown-mermaid-preview.png)
