@@ -75,5 +75,5 @@ setopt HIST_IGNORE_SPACE
 
 With this option, any command, with a preceding space, will NOT be included in the history.
 
-For more inspiration, check out my [zshrc Github repo](https://github.com/jschuster/zshrc).
+For more inspiration, check out my [zshrc config in my dotfiles Github repo](https://github.com/jschuster/dotfiles/blob/main/oh-my-zsh/zshrc).
 </div>

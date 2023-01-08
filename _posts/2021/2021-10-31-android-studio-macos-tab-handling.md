@@ -17,11 +17,17 @@ Go to **Apple menu**  > **System Preferences**, then click **General** and set *
 
 ![Screenshot of macOS General System Preferences](../../assets/images/2021/2021-10-31-macos-system-preferences-general.png)
 
+Alternatively, for people who prefer the terminal
+
+```
+defaults write -g AppleWindowTabbingMode -string always
+```
+
 From now on, all applications that support this will open tabs instead of new windows.
 
 This way you can even teach Android Studio (or IntelliJ) to display all project windows in tabs (there is no menu entry or shortcut for this yet).
 
-SourceTree can also be made to start with all tabs from the previous session in this way - otherwise [SourceTree always forgets](https://community.atlassian.com/t5/Sourcetree-questions/How-to-Start-SourceTree-for-Mac-with-Tabbed-Windows/qaq-p/627191) whether the windows are currently collected and displayed in tabs when exiting and restarting.
+SourceTree can also be set to start with all the tabs from the previous session - otherwise [SourceTree always forgets](https://community.atlassian.com/t5/Sourcetree-questions/How-to-Start-SourceTree-for-Mac-with-Tabbed-Windows/qaq-p/627191) whether the windows are currently collected and displayed in tabs when exiting and restarting.
 
 # A little more refinement
 
