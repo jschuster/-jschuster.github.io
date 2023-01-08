@@ -70,9 +70,9 @@ author:
   avatar : "/assets/images/bio-photo.jpg"
   bio    : "Mobile App Developer"
   links:
-    # - label: "Website"
-    #   icon: "fas fa-fw fa-link"
-    #   url: "https://"
+    - label: "Mastodon"
+      icon: "fab fa-mastodon"
+      url: https://mastodon.cloud/@jschuster
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/joachimschuster"
@@ -82,6 +82,9 @@ author:
 
 footer:
   links:
+    - label: "Mastodon"
+      icon: "fab fa-mastodon"
+      url: https://mastodon.cloud/@jschuster
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/joachimschuster"
