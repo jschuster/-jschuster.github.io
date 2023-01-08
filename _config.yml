@@ -62,7 +62,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
-  - jekyll-target-blank
+  - jekyll-link-attributes
   - jekyll-analytics
 
 author:
@@ -119,6 +119,11 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+external_links:
+  enabled: true
+  rel: external nofollow noopener
+  target: _blank
 
 jekyll_analytics:
   Plausible:

@@ -83,14 +83,12 @@ GEM
       octokit (~> 4.2)
     jekyll-include-cache (0.2.1)
       jekyll (>= 3.7, < 5.0)
+    jekyll-link-attributes (1.0.1)
     jekyll-paginate (1.1.0)
     jekyll-sass-converter (1.5.2)
       sass (~> 3.4)
     jekyll-sitemap (1.4.0)
       jekyll (>= 3.7, < 5.0)
-    jekyll-target-blank (2.0.0)
-      jekyll (>= 3.0, < 5.0)
-      nokogiri (~> 1.10)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
     jemoji (0.12.0)
@@ -155,12 +153,12 @@ DEPENDENCIES
   jekyll-feed
   jekyll-gist
   jekyll-include-cache
+  jekyll-link-attributes
   jekyll-paginate
   jekyll-sitemap
-  jekyll-target-blank
   jemoji
   minimal-mistakes-jekyll
   tzinfo-data
 
 BUNDLED WITH
-   2.0.2
+   2.3.22
