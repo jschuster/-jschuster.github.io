@@ -1,23 +1,23 @@
 {
-    "subject": "acct:jschuster@mastodon.cloud",
+    "subject": "acct:jschuster@mastodon.social",
     "aliases": [
-        "https://mastodon.cloud/@jschuster",
-        "https://mastodon.cloud/users/jschuster"
+        "https://mastodon.social/@jschuster",
+        "https://mastodon.social/users/jschuster"
     ],
     "links": [
         {
             "rel": "http://webfinger.net/rel/profile-page",
             "type": "text/html",
-            "href": "https://mastodon.cloud/@jschuster"
+            "href": "https://mastodon.social/@jschuster"
         },
         {
             "rel": "self",
             "type": "application/activity+json",
-            "href": "https://mastodon.cloud/users/jschuster"
+            "href": "https://mastodon.social/users/jschuster"
         },
         {
             "rel": "http://ostatus.org/schema/1.0/subscribe",
-            "template": "https://mastodon.cloud/authorize_interaction?uri={uri}"
+            "template": "https://mastodon.social/authorize_interaction?uri={uri}"
         }
     ]
 }

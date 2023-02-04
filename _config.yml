@@ -72,7 +72,7 @@ author:
   links:
     - label: "Mastodon"
       icon: "fab fa-mastodon"
-      url: https://mastodon.cloud/@jschuster
+      url: https://mastodon.social/@jschuster
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/joachimschuster"
@@ -84,7 +84,7 @@ footer:
   links:
     - label: "Mastodon"
       icon: "fab fa-mastodon"
-      url: https://mastodon.cloud/@jschuster
+      url: https://mastodon.social/@jschuster
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/joachimschuster"
