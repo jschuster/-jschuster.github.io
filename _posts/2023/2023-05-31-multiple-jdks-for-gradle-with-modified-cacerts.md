@@ -5,14 +5,13 @@ categories:
 tags:
   - gradle
   - java
-
 ---
 
 You already use your project with [another JDK than the one embedded by Android Studio]({{ site.baseurl }}{% link _posts/2021/2021-08-28-android-studio-gradle-jdk.md%}) and have to have some JDK versions in parallel. Thats no big deal.
 
 Trouble starts if you have to use custom certificates to communicate with your own server for e.g. downloading dependencies.
 
-You have to patch those custom certificates to the JDKs `cacerts`. Every JDK installation brings its own `cacerts`. So you have to do that patching every time you install a new JDK or update an existing. Even worse if you use the Android Studio embedded JDK - if you patch that `cacerts`,  your next update to Android Studio will fail.
+You have to patch those custom certificates to the JDKs `cacerts`. Each JDK installation contains its own cacerts. So you need to patch it every time you install a new JDK or update an existing one. Even worse if you use the Android Studio embedded JDK - if you patch that `cacerts`,  your next update to Android Studio will fail.
 
 However, if you have failed to patch the `cacerts`, you will get an error when you build your project with the new JDK and try to download dependencies from your server that require a custom certificate.
 
