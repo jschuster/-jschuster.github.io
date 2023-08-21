@@ -9,7 +9,8 @@ tags:
   - terminal
 ---
 
-**Update 31.07.2022:** Chipmunk has this problem again. You can find a slightly adapted tutorial for this Android Studio version in my post: [Fix Markdown Plugin in Android Studio Chipmunk 2021.2.1]({{ site.baseurl }}{% link _posts/2022/2022-07-31-android-studio-fix-markdown-plugin-again.md%})
+{: .notice}
+**Update 2022-07-31:** Chipmunk has this problem again. You can find a slightly adapted tutorial for this Android Studio version in my post: [Fix Markdown Plugin in Android Studio Chipmunk 2021.2.1]({{ site.baseurl }}{% link _posts/2022/2022-07-31-android-studio-fix-markdown-plugin-again.md%})
 
 When editing a Markdown file, Android Studio suggests installing the [Markdown Plugin](https://plugins.jetbrains.com/plugin/7793-markdown). The [IntelliJ IDEA 2020.3 Doku](https://www.jetbrains.com/help/idea/2020.3/markdown.html)  (Android Studio Arctic Fox 2020.3.1 is based on that version)  shows some nice shortcuts and screenshots.
 
