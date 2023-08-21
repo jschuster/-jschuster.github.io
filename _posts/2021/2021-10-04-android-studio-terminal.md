@@ -1,5 +1,6 @@
 ---
 title: "Android (Studio) and the terminal" 
+last_modified_at: 2023-08-21 12:00:00 +0200
 toc: true
 categories:
   - Development
@@ -8,6 +9,9 @@ tags:
   - android
   - terminal
 ---
+
+{: .notice}
+**Update 2023-08-21:** In the meantime, the documentation was turned on its head. The [former statement use ANDROID_HOME over ANDROID_SDK_ROOT](https://web.archive.org/web/20211127190734/https://developer.android.com/studio/command-line/variables) is now exactly the opposite. I have updated this post to reflect the new recommendations.
 
 Sooner or later you will get to the point where you need to use Android tools via the terminal.
 
@@ -18,15 +22,17 @@ The tools are located deep in the paths of the Android SDK like `/Users/joachim/
 Add the following lines to your `~/.zshrc`.
 
 ```bash
-export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
-export PATH=${PATH}:$ANDROID_SDK_ROOT/emulator
-export PATH=${PATH}:$ANDROID_SDK_ROOT/tools
-export PATH=${PATH}:$ANDROID_SDK_ROOT/platform-tools
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=${PATH}:$ANDROID_HOME/emulator
+export PATH=${PATH}:$ANDROID_HOME/tools
+export PATH=${PATH}:$ANDROID_HOME/platform-tools
 ```
 
 {: .notice--warning}
 
-**Note:** Most likely you will find some tutorials and documents that mention that the environment variable `ANDROID_HOME` must be set. This is deprecated according to the [documentation](https://developer.android.com/studio/command-line/variables#envar). `ANDROID_SDK_ROOT` has exaclty the same effect and replaces  `ANDROID_HOME`.
+**Note:** ~~Most likely you will find some tutorials and documents that mention that the environment variable `ANDROID_HOME` must be set. This is deprecated according to the [documentation](https://developer.android.com/studio/command-line/variables#envar). `ANDROID_SDK_ROOT` has exaclty the same effect and replaces  `ANDROID_HOME`.~~<br><br>
+**Update 2023-08-21:** The recommendation changed back and forth - nowadays the `ANDROID_HOME` should be used and `ANDROID_SDK_ROOT` is deprecated.
+Since this can change again, it is best to check the current [documentation](https://developer.android.com/tools/variables#envar) 😉.
 
 {: .notice--warning}
 
