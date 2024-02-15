@@ -1,5 +1,6 @@
 ---
 title: "Android Studio as your standard diff and merge tool" 
+last_modified_at: 2024-02-15 12:00:00 +0200
 toc: true
 categories:
   - Development
@@ -8,27 +9,29 @@ tags:
   - terminal
 ---
 
+{: .notice}
+**Update 2024-02-15:**  With Hedgehog, the installation process described in the section [Install command line launcher](#install-command-line-launcher) has changed. I have created a [new blog post]({{ site.baseurl }}{% link _posts/2024/2024-02-15-android-studio-as-diff-tool-2024-way.md%}) on how to start Android Studio via the command line from now on.
+
 Android Studio (resp. [IntelliJ IDEA]( https://www.jetbrains.com/help/idea/command-line-differences-viewer.html)) provides a very good diff and merge tool. Android Studio can also be integrated into the terminal.
 
-This makes it ideal for integration into other tools like Git clients. I prefer SourceTree, but that's just a matter of taste and probably just a matter of getting used to it over the years.
+This makes it ideal for integration into other tools like Git clients. I prefer Sourcetree, but that's just a matter of taste and probably just a matter of getting used to it over the years.
 
-So integrating Android Studio with SourceTree as a diff and merge tool only requires the `studio` launcher script.
+So integrating Android Studio with Sourcetree as a diff and merge tool only requires the `studio` launcher script.
 
 ## Install command line launcher
 
 In Android Studio open menu **Tools** > **Create Command Line Launcher…** and confirm the installation to the default location with **OK**.
 
-![Android Studio Command-Line Launcher](../../assets/images/2021/2021-10-06-android-studio-command-line-launcher-installer.png)
+![Android Studio Command-line Launcher](../../assets/images/2021/2021-10-06-android-studio-command-line-launcher-installer.png)
 
 
 This creates a script named `studio` in `/usr/local/bin` which should by default be in the `PATH` variable. So you can use it from any path in your terminal.
 
 {: .notice--warning}
-
 **Note:** If you have multiple Android Studio versions installed, keep in mind that the script will reference the instance you created the script from.   
 So, if you want to change Android Studio to a different location, you may need to recreate the script, which replaces the existing script with the new one.
 
-## Configure SauceTree
+## Configure Sourcetree
 
 The Android Studio command line tool `studio` brings the parameters `diff` and `merge`.
 
@@ -53,7 +56,7 @@ merge $LOCAL $REMOTE $BASE $MERGED
 
 The Result should look like this
 
-![SourceTree Preferences Diff Tool](../../assets/images/2021/2021-10-06-sourcetree-preferences-diff-tool.png)
+![Sourcetree Preferences Diff Tool](../../assets/images/2021/2021-10-06-sourcetree-preferences-diff-tool.png)
 
 
 
@@ -68,7 +71,7 @@ Have a look at your gitconfig - you may want to use your new studio command line
 ```
 studio ~/.gitconfig
 ```
-If you configured SourceTree beforehand you will see, the SourceTree configuration is embedded directly into your `.gitconfig` among other configurations.
+If you configured Sourcetree beforehand you will see, the Sourcetree configuration is embedded directly into your `.gitconfig` among other configurations.
 
 ```bash
 ...
@@ -82,7 +85,7 @@ If you configured SourceTree beforehand you will see, the SourceTree configurati
 ```
 
 {: .notice--info}
-**Info:** If you have [configured SauceTree](#configure-saucetree) you should not modify the name behind `difftool` and `mergetool`  - SourceTree will lose it's connection and will create new entries in the file.  
+**Info:** If you have [configured SauceTree](#configure-saucetree) you should not modify the name behind `difftool` and `mergetool`  - Sourcetree will lose it's connection and will create new entries in the file.  
 If you have not and do not want to, you can copy the snippet and replace the name "saucetree" with any other.
 
 Add the following line to use the `difftool` configuration from above also for the command line.
