@@ -17,7 +17,14 @@ Start
 docker start jsblog
 ```
 
+Log
+
+```
+docker logs -f jsblog
+```
+
 On configuration changes (while started)
+
 ```
 docker exec -it jsblog bundle exec jekyll build
 ```
@@ -31,3 +38,4 @@ For changes on the gems
 ```
 docker exec -it jsblog bundle install
 ```
+

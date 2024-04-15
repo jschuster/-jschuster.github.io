@@ -21,7 +21,7 @@ Running `java` from the terminal runs by default the latest installed version. S
 
 {: .notice--info}
 
-**Note:** `/usr/bin/java` is not just a symbolic link to a Virtual Machines `/bin/java` binary. Instead, it behaves like a proxy binary by default - it finds the latest installed JDK and uses that when executing. However, you can instruct it to use a specific version.
+**Info:** `/usr/bin/java` is not just a symbolic link to a Virtual Machines `/bin/java` binary. Instead, it behaves like a proxy binary by default - it finds the latest installed JDK and uses that when executing. However, you can instruct it to use a specific version.
 
 If you want to run a specific version you have to specify the environment variable `$JAVA_HOME` pointing to the path of the version you want to use.
 

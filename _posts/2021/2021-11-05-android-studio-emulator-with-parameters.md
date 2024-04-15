@@ -1,5 +1,6 @@
 ---
-title: "Launch emulator with parameters from Android Studio on a Mac" 
+title: "Launch emulator with parameters from Android Studio on a Mac"
+last_modified_at: 2024-04-15 12:00:00 +0200
 toc: true
 categories:
   - Development
@@ -16,7 +17,7 @@ The Android Studio documentation has a big chapter about the emulator and also a
 There you will find a lot of useful parameters documented. However, the problem is that you have to start the emulator from the terminal to specify the parameters along with the command line. Android Studio does not provide a way to pass some parameters, and it is cumbersome to say the least to always start the emulator from the terminal and then use it from Android Studio.
 
 {: .notice--info}
-**Note:** In Arctic Fox and before, the Android Studio emulator was launched as a separate application. It respected at least some of the parameters like `export QEMU_AUDIO_DRV=none` that were set in the `.zshrc`. With Bumblebee, the parameters set in the `.zshrc` do not work at all when you use the emulator embedded in Android Studio.
+**Info:** In Arctic Fox and before, the Android Studio emulator was launched as a separate application. It respected at least some of the parameters like `export QEMU_AUDIO_DRV=none` that were set in the `.zshrc`. With Bumblebee, the parameters set in the `.zshrc` do not work at all when you use the emulator embedded in Android Studio.
 
 But since 2018 there is a [hidden feature](https://github.com/JetBrains/android/commit/dd839c9436e425381256cb2e984305c09a7fbbd9)  to set custom parameters for emulators in Android Studio. So it is quite easy to set an environment variable `studio.emu.params` to provide parameters to the emulator on startup via Android Studio - at least for Windows and Linux users - most Mac users will have a hard time setting an environment variable with dots in the name via the often mentioned `.zshrc`.
 
@@ -80,7 +81,8 @@ launchctl unload ~/Library/LaunchAgents/studio-environments.plist
 You can check your changes with `launchctl getenv studio.emu.params`, as described above.
 
 <div class="notice--info" markdown="1">
-**Note:** You can set multiple parameters. The parameters must be separated with a comma `,` - no space.
+**Info:** You can set multiple parameters. The parameters must be separated with a comma `,` - no space.
+
 
 ```
 launchctl setenv studio.emu.params -writable-system,-noaudio
@@ -95,4 +97,8 @@ In the XML you have to set it in one line
 
 {: .notice--primary}
 **Tip:** If you have some Bluetooth headphones and notice strange hissing sounds while the emulator is running, you might find it useful to add the `-noaudio` mentioned above. You won't hear any sound from the emulator anymore, but the hissing will be gone too ;)
+
+{: .notice--info}
+**Info2:** Maybe you start your Mac with automatically starting applications. If Android Studio starts this way, you will notice that it does not respect the values set with launchctl - even if they are permanently set with the  `.plist` file in  `~/Library/LaunchAgents/`. It seems that the setting of launchctl at login occurs a little later than the automatic start of Android Studio. 
+This is unpleasant, but can easily be fixed by closing and starting Android Studio manually.
 

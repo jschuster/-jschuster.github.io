@@ -70,7 +70,7 @@ defaults delete -app "Android Studio" AppleWindowTabbingMode
 You can now set the behavior for all apps individually. Of course, you can also use it the other way around and set all apps to **always** in the System Preferences and exclude individual apps by setting **manual** via command line.
 
 <div class="notice--info" markdown="1">
-**Note:** For Finder it needs a slightly different usage - here the bundle identifier has to be used instead of the app name.
+**Info:** For Finder it needs a slightly different usage - here the bundle identifier has to be used instead of the app name.
 ```
 defaults write com.apple.finder AppleWindowTabbingMode -string "manual"
 ```
