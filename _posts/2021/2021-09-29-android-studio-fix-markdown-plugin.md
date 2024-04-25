@@ -1,6 +1,6 @@
 ---
 title: "Fix Markdown Plugin in Android Studio Arctic Fox 2020.3.1" 
-last_modified_at: 2022-07-31 12:00:00 +0200
+last_modified_at: 2024-04-25 12:00:00 +0200
 toc: true
 categories:
   - Development
@@ -8,6 +8,9 @@ tags:
   - android-studio
   - terminal
 ---
+
+{: .notice}
+**Update 2024-05-25:** The struggle continues. You can find another slightly customized guide for this Android Studio version in my post: [Fix Markdown Plugin in Android Studio in 2024]({{ site.baseurl }}{% link _posts/2024/2024-04-25-android-studio-markdown-struggle-never-ends.md%})
 
 {: .notice}
 **Update 2022-07-31:** Chipmunk has this problem again. You can find a slightly adapted tutorial for this Android Studio version in my post: [Fix Markdown Plugin in Android Studio Chipmunk 2021.2.1]({{ site.baseurl }}{% link _posts/2022/2022-07-31-android-studio-fix-markdown-plugin-again.md%})
