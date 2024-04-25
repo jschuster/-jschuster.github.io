@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://joachimschuster.de/feed.xml" rel="self" type="application/atom+xml" /><link href="https://joachimschuster.de/" rel="alternate" type="text/html" /><updated>2024-04-25T20:24:24+02:00</updated><id>https://joachimschuster.de/feed.xml</id><title type="html">Joachim Schuster’s blog</title><subtitle>Joachim Schuster's personal thoughts, ideas, insights about software development and especially the development of mobile apps.</subtitle><author><name>Joachim Schuster</name></author><entry><title type="html">Fix Markdown Plugin in Android Studio in 2024</title><link href="https://joachimschuster.de/posts/android-studio-markdown-struggle-never-ends/" rel="alternate" type="text/html" title="Fix Markdown Plugin in Android Studio in 2024" /><published>2024-04-25T00:00:00+02:00</published><updated>2024-04-25T00:00:00+02:00</updated><id>https://joachimschuster.de/posts/android-studio-markdown-struggle-never-ends</id><content type="html" xml:base="https://joachimschuster.de/posts/android-studio-markdown-struggle-never-ends/"><![CDATA[<p>Android Studio has been having problems with the <a href="https://plugins.jetbrains.com/plugin/7793-markdown">Markdown Plugin</a> for some time now.</p>
+
+<p>It started with  <a href="/posts/android-studio-fix-markdown-plugin/">Arctic Fox 2020.3.1</a>., continued with <a href="/posts/android-studio-fix-markdown-plugin-again/">Chipmunk 2021.2.1</a> and has since continued with at least Giraffe, Hedgehog and now Iguana too.
+Since this <a href="https://issuetracker.google.com/issues/159933628">doesn’t seem to be fixed in upcoming releases</a>, here is a guide that I will continue to maintain.</p>
+
+<h2 id="change-jbr-in-android-studio-to-fix-markdown-plugin">Change JBR in Android Studio to fix Markdown plugin</h2>
+
+<p class="notice--info"><strong>Info:</strong> Since Giraffe at the latest, you must also adjust a so-called <a href="#registry---disable-idebrowserjcefsandboxenable">registry entry</a>. You have to reboot for this to take effect. So if you set it before selecting the boot runtime, you only have to reboot once.</p>
+
+<p>The Markdown plugin requires a JBR (JetBrains Runtime) that integrates JCEF. For some reason, Google bundles Android Studio by default with a JBR without JCEF. But you can change it.</p>
+
+<h3 id="choose-boot-java-runtime">Choose Boot Java Runtime</h3>
+
+<ul>
+  <li>open menu <strong>Help</strong> &gt; <strong>Find Action…</strong> (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>A</kbd>) and search for “Choose Boot Java Runtime for the IDE…” and execute</li>
+  <li>In the dialog open the drop down <strong>Select runtime</strong>
+<img src="../../assets/images/2024/2024-04-25-android-studio-choose-jbr-dialog.png" alt="2024-04-25-android-studio-choose-jbr-dialog" /></li>
+  <li>Take the default selection or choose from one with JCEF in its title. Confirm with OK.
+<img src="../../assets/images/2024/2024-04-25-android-studio-choose-jbr-dialog-selection.png" alt="2024-04-25-android-studio-choose-jbr-dialog-selection" /></li>
+  <li>After download and install you have to apply the changes with <strong>Restart now</strong>
+<img src="../../assets/images/2024/2024-04-25-android-studio-choose-jbr-confirm-dialog.png" alt="2024-04-25-android-studio-choose-jbr-confirm-dialog" /></li>
+</ul>
+
+<p>Done. Now you can enjoy the full Markdown experience again.</p>
+
+<h3 id="registry---disable-idebrowserjcefsandboxenable">Registry - disable ide.browser.jcef.sandbox.enable</h3>
+
+<p>It is very likely that you will receive the following message after restarting Android Studio (at least that was the case for me with Giraffe, Hedgehog and Iguana):</p>
+
+<p><img src="../../assets/images/2024/2024-04-25-android-studio-jbr-gpu-warning.png" alt="2024-04-25-android-studio-jbr-gpu-warning" /></p>
+
+<p>To fix this:</p>
+
+<ul>
+  <li>
+    <p>open menu <strong>Help</strong> &gt; <strong>Find Action…</strong> (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>A</kbd>) and search for “Registry…” and execute</p>
+  </li>
+  <li>find the key <code class="language-plaintext highlighter-rouge">ide.browser.jcef.sandbox.enable</code> by typing the first letters or srcoll down in the list</li>
+  <li>disable this key
+<img src="../../assets/images/2024/2024-04-25-android-studio-registry-uncheck-jcef-sandbox.png" alt="2024-04-25-android-studio-registry-uncheck-jcef-sandbox" /></li>
+  <li>Close the Registry Editor</li>
+  <li>Restart Android Studio (or if you read this manual carefully, set the Registry before <a href="#choose-boot-java-runtime">Choose Boot Java Runtime</a> to restart only once😉)</li>
+</ul>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="android-studio" /><category term="terminal" /><summary type="html"><![CDATA[Android Studio has been having problems with the Markdown Plugin for some time now.]]></summary></entry><entry><title type="html">Android Studio as your standard diff and merge tool - 2024 Hedgehog update</title><link href="https://joachimschuster.de/posts/android-studio-as-diff-tool-2024-way/" rel="alternate" type="text/html" title="Android Studio as your standard diff and merge tool - 2024 Hedgehog update" /><published>2024-02-15T00:00:00+01:00</published><updated>2024-04-15T12:00:00+02:00</updated><id>https://joachimschuster.de/posts/android-studio-as-diff-tool-2024-way</id><content type="html" xml:base="https://joachimschuster.de/posts/android-studio-as-diff-tool-2024-way/"><![CDATA[<p>With Android Studio Hedgehog, my now outdated blog post <a href="/posts/android-studio-as-diff-tool/">Android Studio as a standard diff and merge tool</a> on the same topic unfortunately no longer works.</p>
+
+<p>So here is a little update on how to use Android Studio (or IntelliJ IDEA) as a diff tool for e.g. Sourcetree.</p>
+
+<h2 id="create-command-line-launcher">Create command line launcher</h2>
+
+<p>In earlier Android Studio versions, you could create a command line launcher via the menu <strong>Tools</strong> &gt; <strong>Create Command Line Launcher…</strong> and confirm the installation to the default location with <strong>OK</strong>.</p>
+
+<p>Nowadays, you get the information that you have to create it yourself:</p>
+
+<p><img src="../../assets/images/2024/2024-02-15-android-studio-command-line-launcher-dialog.png" alt="Android Studio Command-line Launcher Dialog" /></p>
+
+<p>The suggested way to add  <code class="language-plaintext highlighter-rouge">'/Applications/Android Studio.app/Contents/MacOS' </code>to the <code class="language-plaintext highlighter-rouge">$PATH</code> variable made the command <code class="language-plaintext highlighter-rouge">studio</code> available to the terminal. But Sourcetree does not read the <code class="language-plaintext highlighter-rouge">$PATH</code> varialbe and thus did not work with setting <code class="language-plaintext highlighter-rouge">studio</code> as the Diff command.</p>
+
+<p>What worked, however, was to set the entire path to the <code class="language-plaintext highlighter-rouge">studio</code> binary so <code class="language-plaintext highlighter-rouge">'/Applications/Android Studio.app/Contents/MacOS/studio'</code> (note: enclosed in <code class="language-plaintext highlighter-rouge">'</code> because of the space in the app name) as a diff command.</p>
+
+<h2 id="the-better-way-create-a-studio-script-in-usrlocalbin">The better way: create a studio script in /usr/local/bin/</h2>
+
+<p>The <a href="https://www.jetbrains.com/help/idea/working-with-the-ide-features-from-command-line.html#69da8ca7">online help</a> mentioned in this dialog suggests creating the start script yourself. However, some details are missing in this suggested solution.</p>
+
+<p>The easiest and best way I have found is to create a script file named <code class="language-plaintext highlighter-rouge">studio</code> in <code class="language-plaintext highlighter-rouge">/usr/local/bin/</code> (or somewhere else and create a symbolic link to it) and make it executable with the <code class="language-plaintext highlighter-rouge">chmod +x</code> command as described in the online help.</p>
+
+<p>Almost identical, but with the following content:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+open <span class="nt">-W</span> <span class="nt">-nb</span> <span class="s2">"com.google.android.studio"</span> <span class="nt">--args</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p class="notice--info"><strong>Info:</strong> The essential part is the <code class="language-plaintext highlighter-rouge">-W</code> parameter - otherwise Android Studio will start and complain that it could not find the files to compare.<br />
+Instead of the <code class="language-plaintext highlighter-rouge">-a</code> parameter from the <a href="https://www.jetbrains.com/help/idea/working-with-the-ide-features-from-command-line.html#69da8ca7">online help</a>, I prefer the <code class="language-plaintext highlighter-rouge">-b</code> parameter, which uses the BundleIdentifier instead of the application name to find the application to open, which is more reliable in my opinion.</p>
+
+<p class="notice--info"><strong>Info2:</strong> You may come to the conclusion that you should add this command as a zsh function instead of creating an extra bash script file for it. But with the integration in Sourcetree you are out of luck. Since Sourcetree doesn’t read <code class="language-plaintext highlighter-rouge">~/.zshrc</code> (as I said, it doesn’t read <code class="language-plaintext highlighter-rouge">$PATH</code> either), it won’t recognize the function definitions it contains.</p>
+
+<p>With this studio script the configuration is exaclty like in the old days <a href="/posts/android-studio-as-diff-tool/#configure-sourcetree">Android Studio as your standard diff and merge tool</a>.</p>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="android-studio" /><category term="terminal" /><summary type="html"><![CDATA[With Android Studio Hedgehog, my now outdated blog post Android Studio as a standard diff and merge tool on the same topic unfortunately no longer works.]]></summary></entry><entry><title type="html">Gradle 8 and JDK 17 upgrade - follow-ups</title><link href="https://joachimschuster.de/posts/gradle-and-jdks-the-better/" rel="alternate" type="text/html" title="Gradle 8 and JDK 17 upgrade - follow-ups" /><published>2023-08-13T00:00:00+02:00</published><updated>2023-08-13T00:00:00+02:00</updated><id>https://joachimschuster.de/posts/gradle-and-jdks-the-better</id><content type="html" xml:base="https://joachimschuster.de/posts/gradle-and-jdks-the-better/"><![CDATA[<p>A couple of questions came up during the <a href="/posts/gradle-and-jdks/">transition to Gradle 8 and thus the transition to JDK 17</a>.</p>
+
+<ol>
+  <li>What is the difference between setting target versions and using toolchain?</li>
+  <li>Recommended approach now in 2023?</li>
+  <li>can this work well with Java 17 on e.g. Android 7.0 (aka 24) devices (definitely don’t have a Java 17 compatible DVM yet)</li>
+</ol>
+
+<p>In this post I would like to clarify the first two questions directly (even if it must somehow fulfill the 3rd question, but more on that later).</p>
+
+<h1 id="the-thing-with-the-target-version-briefly-explained">The thing with the target version briefly explained</h1>
+
+<p>The Java or Kotlin compiler translates the sources into class files. These class files receive a version, which indicates to the executing JVM, which version it must have at least, in order to be able to execute the bytecode in it.</p>
+
+<p>With <code class="language-plaintext highlighter-rouge">targetCompatibility</code> or <code class="language-plaintext highlighter-rouge">jvmTarget</code> one determines the version, which are written into the Class files. So you can set a class file, which was created by Java compiler of the version 17 consciously nevertheless e.g. the target version 8.</p>
+
+<p>What for? You might want to make sure that the compiled code runs reliably on an old JVM 8 even though you want or have to use the more recent JDK 17 compiler.</p>
+
+<p>To make sure that you don’t accidentally use Java 11 or 17 language resources in your source code, there is another parameter <a href="https://developer.android.com/build/jdks#source-compat"><code class="language-plaintext highlighter-rouge">sourceCompatibility</code></a>. This parameter makes sure that the IDE linter will immediately react if you accidentally use a language feature of a newer Java version.</p>
+
+<p class="notice--info"><strong>Info:</strong> Specifying <code class="language-plaintext highlighter-rouge">targetCompatibility</code> does not do any conversion or similar magic. So you cannot simply use the latest Java 17 language tools and expect that by this setting then the compiler will generate from it bytecode compatible for e.g. JVM 8.<br />This also explains why <code class="language-plaintext highlighter-rouge">sourceCompatibility</code> <strong>must not be higher</strong> than <code class="language-plaintext highlighter-rouge">targetCompatibility</code>. It would calm down the linter and thus one could diligently use Java 17 language means in the code. When compiling with a Java 17 compiler, a valid class file would also still come out. But by setting the major version in the class file (via targetCompatibility) to Java 8, a JVM 8 would accept that but then fail on the Java 17 bytecode at runtime.</p>
+
+<h1 id="the-new-recommended-way---toolchain">The new recommended way - toolchain</h1>
+
+<p><a href="https://blog.gradle.org/java-toolchains">Gradle 6.7 itroduced the “Java toolchain support”</a> and has become so established that the <a href="https://developer.android.com/build/jdks#toolchain">Google doc also makes the clear recommendation</a> to rely on the toolchain specification. <a href="/posts/gradle-and-jdks/">The error output mentioned in the previous post</a> also suggests this solution.</p>
+
+<p>By specifying the toolchain, you tell Gradle which JDK and thus which compiler version you specifically want to use to compile the sources. It does not simply set the <code class="language-plaintext highlighter-rouge">targetCompatibility</code> in the class files, as described above. Gradle 8 can thus use any other JDK to compile the sources, whether that is the same JDK 17 or a completely different one.</p>
+
+<p>The advantage:</p>
+
+<ol>
+  <li>
+    <p>you can specify a specific version regardless of the JDK running Gradle, which will then be reliably maintained</p>
+  </li>
+  <li>
+    <p>since the setting of the toolchain then also set <code class="language-plaintext highlighter-rouge">targetCompatibilty</code>, <code class="language-plaintext highlighter-rouge">sourceCompatibilty</code> and <code class="language-plaintext highlighter-rouge">jvmTarget</code>, you can save these specifications</p>
+  </li>
+  <li>
+    <p>if one uses Kotlin (possibly also gladly mixed with Java), only the specification for the Kotlin compiler is sufficient</p>
+  </li>
+</ol>
+
+<p>So instead of setting 3 configurations via</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">compileOptions</span> <span class="o">{</span>
+   <span class="n">sourceCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_17</span>  
+   <span class="n">targetCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_17</span>  
+<span class="o">}</span>
+
+<span class="n">kotlinOptions</span> <span class="o">{</span>  
+   <span class="n">jvmTarget</span> <span class="o">=</span> <span class="s1">'17'</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>you can replace it with just this one</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kotlin</span> <span class="o">{</span>  
+ <span class="err"> </span> <span class="err"> </span><span class="n">jvmToolchain</span> <span class="mi">17</span>  
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="notice--warning">
+
+  <p><strong>Note:</strong> If you use something else for the toolchain than the JDK that Gradle runs, you have to consider the following:<br /></p>
+
+  <ol>
+    <li>make sure that this JDK is actually installed (possibly the only option for build servers whose setup cannot be changed dynamically). Gradle tries to determine <a href="https://docs.gradle.org/current/userguide/toolchains.html#sec:precedence">the best possible JDK version</a>.</li>
+    <li>use the so-called <a href="https://docs.gradle.org/current/userguide/toolchains.html#sub:download_repositories">Toolchein Resolver Pluign</a> - with it Grade downloads if necessary a JDK, if it does not find a suitable installed one.</li>
+  </ol>
+
+</div>
+
+<h1 id="conclusion-and-recommendation">Conclusion and recommendation</h1>
+
+<p>So the difference is with setting the target version, you really only set the target version in the class files. It is possible to use a different compiler intentionally or unintentionally. With toolchain you get what you specify.</p>
+
+<p>My personal recommendations:</p>
+<ol>
+  <li>
+    <p>if you have upgraded a project to the latest Gradle 8.2.1 + AGP 8.1, just set the <code class="language-plaintext highlighter-rouge">jvmToolchain</code> for Kotlin only</p>
+  </li>
+  <li>
+    <p>in addition you are free to also mix that with setting <code class="language-plaintext highlighter-rouge">sourceCompatibility</code>, <code class="language-plaintext highlighter-rouge">targetCompatibility</code>, or <code class="language-plaintext highlighter-rouge">jvmTarget</code></p>
+
+    <ul>
+      <li>
+        <p>either if you are still dealing with older AGP versions,  see warning in <a href="https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support">https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support</a></p>
+      </li>
+      <li>
+        <p>or because you just want to force the linter to warn you on using new language features</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>you can set the toolchain to JDK 17 - so you will avoid differences in JDK running Gradle and JDK compiling the code</p>
+  </li>
+</ol>
+
+<p class="notice--warning"><strong>Note:</strong> Not specifying anything at all is a bad choice, by the way: If you omit all specifications, Java version 8 will be assumed by default - not the compiler’s version, as you might think. And since this can also lead to unexpected behavior, it is advisable to specify something in any case.</p>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="gradle" /><category term="java" /><category term="android" /><summary type="html"><![CDATA[A couple of questions came up during the transition to Gradle 8 and thus the transition to JDK 17.]]></summary></entry><entry><title type="html">Gradle 8 and JDK 17 upgrade</title><link href="https://joachimschuster.de/posts/gradle-and-jdks/" rel="alternate" type="text/html" title="Gradle 8 and JDK 17 upgrade" /><published>2023-08-12T00:00:00+02:00</published><updated>2023-08-12T00:00:00+02:00</updated><id>https://joachimschuster.de/posts/gradle-and-jdks</id><content type="html" xml:base="https://joachimschuster.de/posts/gradle-and-jdks/"><![CDATA[<p>Now that Gradle 8 and with it AGP 8 have been out for quite a while, we can finally dare to update the project to Gradle 8 as well.</p>
+
+<p>Gradle 8 needs Java 17, so the good old environment variable <code class="language-plaintext highlighter-rouge">JAVA_HOME</code> has to be <a href="/posts/manage-multiple-java-jdk-versions/">adapted accordingly</a>.</p>
+
+<p>Thanks to the AGP Upgrade Assistant, upgrading the settings is done with one click.</p>
+
+<p>To upgrade the wrapper as well it is a good idea to perform the <a href="https://docs.gradle.org/current/userguide/upgrading_version_7.html">official migration</a> step as well.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./gradlew wrapper <span class="nt">--gradle-version</span> 8.2.1
+</code></pre></div></div>
+
+<p>Sync and Build … and Fail.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- 'compileDebugJavalithJavac' task (current target is 1.8) and 'kaptGenerateStubsDebugKotlin' task (current target is 17) jvm target compatibility should be set to the same Java version.  
+    Consider using JVM toolchain: https://kotl.in/gradle/jvm/toolchain
+</code></pre></div></div>
+
+<p>Okay, so what does that mean?</p>
+
+<p>Since Gradle is now running JDK 17, all tools and compilers that Gradle launches will also run with the version from that JDK 17.</p>
+
+<p>As the error message says, all targets must match. And it also gives a hint on how to achieve that.</p>
+
+<p>So far, the project is configured the way Android Studio’s sample projects are preconfigured even today.</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">compileOptions</span> <span class="o">{</span>
+   <span class="n">sourceCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span>  
+   <span class="n">targetCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span> 
+<span class="o">}</span>
+
+<span class="n">kotlinOptions</span> <span class="o">{</span>  
+   <span class="n">jvmTarget</span> <span class="o">=</span> <span class="s1">'1.8'</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>In the error message you can see that the Java compiler complies. However, it seems that kapt does not.</p>
+
+<p>Without investigating further, why kapt does not consider the jvmTarget or targetCompatibility, it is easiest to simply adjust the corresponding values to Java version 17.</p>
+
+<p>Now that we already have the entries for compileOptions and kotlinOptions and can adjust them accordingly, a first solution looks like this.</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">compileOptions</span> <span class="o">{</span>
+   <span class="n">sourceCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_17</span>  
+   <span class="n">targetCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_17</span>  
+<span class="o">}</span>
+
+<span class="n">kotlinOptions</span> <span class="o">{</span>  
+   <span class="n">jvmTarget</span> <span class="o">=</span> <span class="s1">'17'</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>After that, the build runs through again without further problems (ok, you may also need to update some dependencies like <code class="language-plaintext highlighter-rouge">kotlin-gradle-plugin</code>, but you would do this anyway 😉).</p>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="gradle" /><category term="java" /><category term="android" /><summary type="html"><![CDATA[Now that Gradle 8 and with it AGP 8 have been out for quite a while, we can finally dare to update the project to Gradle 8 as well.]]></summary></entry><entry><title type="html">Use multiple JDKs for Gradle with common modified cacerts</title><link href="https://joachimschuster.de/posts/multiple-jdks-for-gradle-with-modified-cacerts/" rel="alternate" type="text/html" title="Use multiple JDKs for Gradle with common modified cacerts" /><published>2023-05-31T00:00:00+02:00</published><updated>2023-05-31T00:00:00+02:00</updated><id>https://joachimschuster.de/posts/multiple-jdks-for-gradle-with-modified-cacerts</id><content type="html" xml:base="https://joachimschuster.de/posts/multiple-jdks-for-gradle-with-modified-cacerts/"><![CDATA[<p>You already use your project with <a href="/posts/android-studio-gradle-jdk/">another JDK than the one embedded by Android Studio</a> and have to have some JDK versions in parallel. Thats no big deal.</p>
+
+<p>Trouble starts if you have to use custom certificates to communicate with your own server for e.g. downloading dependencies.</p>
+
+<p>You have to patch those custom certificates to the JDKs <code class="language-plaintext highlighter-rouge">cacerts</code>. Each JDK installation contains its own cacerts. So you need to patch it every time you install a new JDK or update an existing one. Even worse if you use the Android Studio embedded JDK - if you patch that <code class="language-plaintext highlighter-rouge">cacerts</code>,  your next update to Android Studio will fail.</p>
+
+<p>However, if you have failed to patch the <code class="language-plaintext highlighter-rouge">cacerts</code>, you will get an error when you build your project with the new JDK and try to download dependencies from your server that require a custom certificate.</p>
+
+<p>So to avoid having to patch every <code class="language-plaintext highlighter-rouge">cacerts</code> for every JDK version, it would be nice to have a common custom <code class="language-plaintext highlighter-rouge">cacerts</code> and use it regardless of the JDK version used.</p>
+
+<p>You can achieve this by running <code class="language-plaintext highlighter-rouge">gradle</code> with the <code class="language-plaintext highlighter-rouge">javax.net.ssl.trustStore</code> parameter as follows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gradle build -Djavax.net.ssl.trustStore=/PATH/TO/custom_cacerts
+</code></pre></div></div>
+
+<p class="notice--warning"><strong>Note:</strong> The path to your custom_cacerts must be an absolute path. For example, you cannot use ~/custom_cacerts or $HOME/custom_cacerts.</p>
+
+<p>Even better, you can set this parameter as the default for each Gradle execution by specifying it in your <code class="language-plaintext highlighter-rouge">gradle.properties</code> file. This way you don’t have to pass it along with the <code class="language-plaintext highlighter-rouge">gradle</code> command every time, and Android Studio uses this parameter as default as well.</p>
+
+<p>Add the following line to the <code class="language-plaintext highlighter-rouge">gradle.properties</code>  in your <a href="https://docs.gradle.org/current/userguide/directory_layout.html#dir:gradle_user_home">gradle user home</a> <code class="language-plaintext highlighter-rouge">~/.gradle/gradle.properties</code>:</p>
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">systemProp</span><span class="o">.</span><span class="na">javax</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">ssl</span><span class="o">.</span><span class="na">trustStore</span><span class="o">=</span><span class="s">/PATH/</span><span class="n">TO</span><span class="o">/</span><span class="n">custom_cacerts</span>
+</code></pre></div></div>
+
+<p class="notice--info"><strong>Info:</strong> You can configure Gradles  Java process by providing parameters in the <code class="language-plaintext highlighter-rouge">gradle.properties</code>. The <code class="language-plaintext highlighter-rouge">gradle.properties</code> in your <a href="https://docs.gradle.org/current/userguide/directory_layout.html#dir:gradle_user_home">gradle user home</a> can be used for global settings that will be used in every project. It will override those settings you may share with a <code class="language-plaintext highlighter-rouge">gradle.properties</code> file in your project folder.<br /><br />For more details, see the <a href="https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties">Gradle properties documentation</a>.</p>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="gradle" /><category term="java" /><summary type="html"><![CDATA[You already use your project with another JDK than the one embedded by Android Studio and have to have some JDK versions in parallel. Thats no big deal.]]></summary></entry><entry><title type="html">Fix Markdown Plugin in Android Studio Chipmunk 2021.2.1</title><link href="https://joachimschuster.de/posts/android-studio-fix-markdown-plugin-again/" rel="alternate" type="text/html" title="Fix Markdown Plugin in Android Studio Chipmunk 2021.2.1" /><published>2022-07-31T00:00:00+02:00</published><updated>2022-07-31T00:00:00+02:00</updated><id>https://joachimschuster.de/posts/android-studio-fix-markdown-plugin-again</id><content type="html" xml:base="https://joachimschuster.de/posts/android-studio-fix-markdown-plugin-again/"><![CDATA[<p>The good old <a href="https://plugins.jetbrains.com/plugin/7793-markdown">Markdown Plugin</a> stopped working in Android Studio Chipmunk again.</p>
+
+<p>For more details on why, see my old post <a href="/posts/android-studio-fix-markdown-plugin/">Fix Markdown Plugin in Android Studio Arctic Fox 2020.3.1 </a>. In short, the embedded JBR does not integrate JCEF (<a href="https://plugins.jetbrains.com/docs/intellij/jcef.html">Java Chromium Embedded Framework</a>).</p>
+
+<p>But the good news is that Chipmunk has made it even easier to change the JBR.</p>
+
+<h2 id="change-jbr-in-android-studio-to-fix-markdown-plugin">Change JBR in Android Studio to fix Markdown plugin</h2>
+
+<p>So here are the steps to change the JBR in Android Studio Chipmunk:</p>
+
+<ul>
+  <li>open menu <strong>Help</strong> &gt; <strong>Find Action…</strong> (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>A</kbd>) and search for “Choose Boot Java Runtime for the IDE…” and execute</li>
+  <li>In the dialog open the drop down <strong>Select runtime</strong>
+<img src="../../assets/images/2022/2022-07-31-android-studio-choose-jbr-dialog.png" alt="2022-07-31-android-studio-choose-jbr-dialog" /></li>
+  <li>Take the default selection or choose from the <strong>More Runtimes</strong> one with JCEF in its title. Confirm with OK.
+<img src="../../assets/images/2022/2022-07-31-android-studio-choose-jbr-dialog-selection.png" alt="2022-07-31-android-studio-choose-jbr-dialog-selection" /></li>
+  <li>After download and install you have to apply the changes with <strong>Restart now</strong>
+<img src="../../assets/images/2022/2022-07-31-android-studio-choose-jbr-confirm-dialog.png" alt="2022-07-31-android-studio-choose-jbr-confirm-dialog" /></li>
+</ul>
+
+<p>Done. Now you can enjoy the full Markdown experience again.</p>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="android-studio" /><category term="terminal" /><summary type="html"><![CDATA[The good old Markdown Plugin stopped working in Android Studio Chipmunk again.]]></summary></entry><entry><title type="html">Manage multiple Java JDK versions on a Mac</title><link href="https://joachimschuster.de/posts/manage-multiple-java-jdk-versions/" rel="alternate" type="text/html" title="Manage multiple Java JDK versions on a Mac" /><published>2021-12-19T00:00:00+01:00</published><updated>2021-12-19T00:00:00+01:00</updated><id>https://joachimschuster.de/posts/manage-multiple-java-jdk-versions</id><content type="html" xml:base="https://joachimschuster.de/posts/manage-multiple-java-jdk-versions/"><![CDATA[<p>As an Android developer, you will most likely have come into contact with Java and its JDK (Java Development Kit). Gradle version 7 and above requires JDK version 11 - which is bundled with Android Studio 2020.3.1 Arctic Fox.</p>
+
+<p>If you have read my post about <a href="/posts/android-studio-gradle-jdk/">installing and managing updates of your JDK versions with Android Studio</a> you have found an option to install and update the JDK(s) separate from the Android Studio embedded one. From time to time you may need a specific version for different projects.</p>
+
+<p>Running <code class="language-plaintext highlighter-rouge">java</code> from the terminal runs by default the latest installed version. So starting e.g. <code class="language-plaintext highlighter-rouge">./gradlew app:assembleRelease</code> from the terminal will use the Java JDK that is currently set.</p>
+
+<h2 id="set-specific-jdk-version">Set specific JDK version</h2>
+
+<p class="notice--info"><strong>Info:</strong> <code class="language-plaintext highlighter-rouge">/usr/bin/java</code> is not just a symbolic link to a Virtual Machines <code class="language-plaintext highlighter-rouge">/bin/java</code> binary. Instead, it behaves like a proxy binary by default - it finds the latest installed JDK and uses that when executing. However, you can instruct it to use a specific version.</p>
+
+<p>If you want to run a specific version you have to specify the environment variable <code class="language-plaintext highlighter-rouge">$JAVA_HOME</code> pointing to the path of the version you want to use.</p>
+
+<p>You can list all installed Java versions with the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/libexec/java_home <span class="nt">-V</span>
+</code></pre></div></div>
+
+<p>Will show you a list like this</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Matching Java Virtual Machines <span class="o">(</span>4<span class="o">)</span>:
+    11.0.12.1 <span class="o">(</span>x86_64<span class="o">)</span> <span class="s2">"Amazon.com Inc."</span> - <span class="s2">"Amazon Corretto 11"</span> /Users/joachim/Library/Java/JavaVirtualMachines/corretto-11.0.12/Contents/Home
+    1.8.0_312 <span class="o">(</span>x86_64<span class="o">)</span> <span class="s2">"Amazon"</span> - <span class="s2">"Amazon Corretto 8"</span> /Users/joachim/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home
+    1.8.0_302 <span class="o">(</span>x86_64<span class="o">)</span> <span class="s2">"Amazon"</span> - <span class="s2">"Amazon Corretto 8"</span> /Users/joachim/Library/Java/JavaVirtualMachines/corretto-1.8.0_302/Contents/Home
+    1.8.0_275 <span class="o">(</span>x86_64<span class="o">)</span> <span class="s2">"Amazon"</span> - <span class="s2">"Amazon Corretto 8"</span> /Users/joachim/Library/Java/JavaVirtualMachines/corretto-1.8.0_275/Contents/Home
+/Users/joachim/Library/Java/JavaVirtualMachines/corretto-11.0.12/Contents/Home
+</code></pre></div></div>
+
+<p>The last line shows the path to the latest Java home.</p>
+
+<p>You can get the path to a specific version with the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/libexec/java_home <span class="nt">-v1</span>.8
+</code></pre></div></div>
+
+<p>This will get the path to the latest installation of the specified version 1.8</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/joachim/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home
+</code></pre></div></div>
+
+<p>Combining this you can modify your <code class="language-plaintext highlighter-rouge">.zshrc</code> (resp. <code class="language-plaintext highlighter-rouge">.bashrc</code>) to set your <code class="language-plaintext highlighter-rouge">$JAVA_HOME</code> to a specific version</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Path to JAVA</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="si">$(</span>/usr/libexec/java_home <span class="nt">-v1</span>.8<span class="si">)</span>
+</code></pre></div></div>
+
+<p>Starting a terminal now you will see the output of <code class="language-plaintext highlighter-rouge">echo $JAVA_HOME</code> resulting in the path</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/joachim/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home
+</code></pre></div></div>
+
+<p>And running <code class="language-plaintext highlighter-rouge">java -version</code> will show you the version details like this</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openjdk version <span class="s2">"1.8.0_312"</span>
+OpenJDK Runtime Environment Corretto-8.312.07.1 <span class="o">(</span>build 1.8.0_312-b07<span class="o">)</span>
+OpenJDK 64-Bit Server VM Corretto-8.312.07.1 <span class="o">(</span>build 25.312-b07, mixed mode<span class="o">)</span>
+</code></pre></div></div>
+
+<h2 id="change-jdk-version-temporarily">Change JDK version (temporarily)</h2>
+
+<p>You might like to change the version just for your current terminal session a little more convenient with the following function added to your <code class="language-plaintext highlighter-rouge">.zshrc</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jdk<span class="o">()</span> <span class="o">{</span>
+      <span class="nv">version</span><span class="o">=</span><span class="nv">$1</span>
+      <span class="nb">unset </span>JAVA_HOME<span class="p">;</span>
+      <span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="si">$(</span>/usr/libexec/java_home <span class="nt">-v</span><span class="s2">"</span><span class="nv">$version</span><span class="s2">"</span><span class="si">)</span><span class="p">;</span>
+      java <span class="nt">-version</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>In a new terminal session you will be able to use that function like this</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jdk 11
+</code></pre></div></div>
+
+<p>This sets <code class="language-plaintext highlighter-rouge">$JAVA_HOME</code> to the latest 11 version path and so <code class="language-plaintext highlighter-rouge">java -version</code> will result in</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openjdk version <span class="s2">"11.0.12"</span> 2021-07-20 LTS
+OpenJDK Runtime Environment Corretto-11.0.12.7.2 <span class="o">(</span>build 11.0.12+7-LTS<span class="o">)</span>
+OpenJDK 64-Bit Server VM Corretto-11.0.12.7.2 <span class="o">(</span>build 11.0.12+7-LTS, mixed mode<span class="o">)</span>
+</code></pre></div></div>
+
+<p>Setting the version with the fuction <code class="language-plaintext highlighter-rouge">jdk</code> will change the version for this session - closing this terminal session and starting a new one will take the value of the <code class="language-plaintext highlighter-rouge">$JAVA_HOME</code> set with first <code class="language-plaintext highlighter-rouge">export</code>.</p>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="java" /><category term="macos" /><category term="terminal" /><summary type="html"><![CDATA[As an Android developer, you will most likely have come into contact with Java and its JDK (Java Development Kit). Gradle version 7 and above requires JDK version 11 - which is bundled with Android Studio 2020.3.1 Arctic Fox.]]></summary></entry><entry><title type="html">Launch emulator with parameters from Android Studio on a Mac</title><link href="https://joachimschuster.de/posts/android-studio-emulator-with-parameters/" rel="alternate" type="text/html" title="Launch emulator with parameters from Android Studio on a Mac" /><published>2021-11-05T00:00:00+01:00</published><updated>2024-04-15T12:00:00+02:00</updated><id>https://joachimschuster.de/posts/android-studio-emulator-with-parameters</id><content type="html" xml:base="https://joachimschuster.de/posts/android-studio-emulator-with-parameters/"><![CDATA[<p>Starting an emulator from Android Studio is quite a normal thing. But if you want to provide some parameters along with the emulator startup, you will encounter some problems.</p>
+
+<p>The Android Studio documentation has a big chapter about the emulator and also an extra page for <a href="https://developer.android.com/studio/run/emulator-commandline">emulator command line parameters</a>.</p>
+
+<p>There you will find a lot of useful parameters documented. However, the problem is that you have to start the emulator from the terminal to specify the parameters along with the command line. Android Studio does not provide a way to pass some parameters, and it is cumbersome to say the least to always start the emulator from the terminal and then use it from Android Studio.</p>
+
+<p class="notice--info"><strong>Info:</strong> In Arctic Fox and before, the Android Studio emulator was launched as a separate application. It respected at least some of the parameters like <code class="language-plaintext highlighter-rouge">export QEMU_AUDIO_DRV=none</code> that were set in the <code class="language-plaintext highlighter-rouge">.zshrc</code>. With Bumblebee, the parameters set in the <code class="language-plaintext highlighter-rouge">.zshrc</code> do not work at all when you use the emulator embedded in Android Studio.</p>
+
+<p>But since 2018 there is a <a href="https://github.com/JetBrains/android/commit/dd839c9436e425381256cb2e984305c09a7fbbd9">hidden feature</a>  to set custom parameters for emulators in Android Studio. So it is quite easy to set an environment variable <code class="language-plaintext highlighter-rouge">studio.emu.params</code> to provide parameters to the emulator on startup via Android Studio - at least for Windows and Linux users - most Mac users will have a hard time setting an environment variable with dots in the name via the often mentioned <code class="language-plaintext highlighter-rouge">.zshrc</code>.</p>
+
+<p class="notice--warning"><strong>Note:</strong>  You will find some tutorials suggesting to set the environment variables via <code class="language-plaintext highlighter-rouge">.zshrc</code>. But this works only for applications that are somehow started from the command line to take the settings in <code class="language-plaintext highlighter-rouge">.zshrc</code>. And there is one more limitation with this environment variable - you cannot set environment variables with dots in their names in the shell: <code class="language-plaintext highlighter-rouge">export studio.emu.params=-writable-system</code> will not work.</p>
+
+<h2 id="set-the-studioemuparams">Set the studio.emu.params</h2>
+<p>macOS has no GUI to set the environment variables for applications like Windows does. <code class="language-plaintext highlighter-rouge">launchctl</code> is the tool to set environment variables for macOS applications.</p>
+
+<p>With the following command you will set the environment variable</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>launchctl setenv studio.emu.params -writable-system
+</code></pre></div></div>
+
+<p>And with the following command, you can read the current value</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>launchctl getenv studio.emu.params
+</code></pre></div></div>
+
+<p>Android Studio reads this parameter at startup, so changes will only take effect after Android Studio is (re)started.</p>
+
+<p>This setting will remain until the next time you restart your Mac, so it is very useful for evaluating some changes.</p>
+
+<p>To make things more permanent you need to create a <code class="language-plaintext highlighter-rouge">.plist</code> file e.g. <code class="language-plaintext highlighter-rouge">studio-environments.plist</code> in the folder <code class="language-plaintext highlighter-rouge">~/Library/LaunchAgents/</code> with the following content:</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>Label<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>setenv.studio.emu.params<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>ProgramArguments<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;array&gt;</span>
+        <span class="nt">&lt;string&gt;</span>/bin/launchctl<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;string&gt;</span>setenv<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;string&gt;</span>studio.emu.params<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;string&gt;</span>-writable-system<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/array&gt;</span>
+    <span class="nt">&lt;key&gt;</span>RunAtLoad<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;true/&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div></div>
+
+<p>To load this changes directly (e.g. to apply changes without rebooting your Mac)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>launchctl load ~/Library/LaunchAgents/studio-environments.plist
+</code></pre></div></div>
+
+<p>If you run the command while it is already loaded, you will get an error message like this</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Load failed: 5: Input/output error
+</code></pre></div></div>
+
+<p>You have to unload it before with</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>launchctl unload ~/Library/LaunchAgents/studio-environments.plist
+</code></pre></div></div>
+
+<p>You can check your changes with <code class="language-plaintext highlighter-rouge">launchctl getenv studio.emu.params</code>, as described above.</p>
+
+<div class="notice--info">
+  <p><strong>Info:</strong> You can set multiple parameters. The parameters must be separated with a comma <code class="language-plaintext highlighter-rouge">,</code> - no space.</p>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>launchctl setenv studio.emu.params -writable-system,-noaudio
+</code></pre></div>  </div>
+
+  <p>In the XML you have to set it in one line</p>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;string&gt;-writable-system,-noaudio&lt;/string&gt;
+</code></pre></div>  </div>
+
+</div>
+
+<p class="notice--primary"><strong>Tip:</strong> If you have some Bluetooth headphones and notice strange hissing sounds while the emulator is running, you might find it useful to add the <code class="language-plaintext highlighter-rouge">-noaudio</code> mentioned above. You won’t hear any sound from the emulator anymore, but the hissing will be gone too ;)</p>
+
+<p class="notice--info"><strong>Info2:</strong> Maybe you start your Mac with automatically starting applications. If Android Studio starts this way, you will notice that it does not respect the values set with launchctl - even if they are permanently set with the  <code class="language-plaintext highlighter-rouge">.plist</code> file in  <code class="language-plaintext highlighter-rouge">~/Library/LaunchAgents/</code>. It seems that the setting of launchctl at login occurs a little later than the automatic start of Android Studio. 
+This is unpleasant, but can easily be fixed by closing and starting Android Studio manually.</p>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="macos" /><category term="android-studio" /><category term="emulator" /><summary type="html"><![CDATA[Starting an emulator from Android Studio is quite a normal thing. But if you want to provide some parameters along with the emulator startup, you will encounter some problems.]]></summary></entry><entry><title type="html">Tabs for Android Studio (and other apps) on a Mac</title><link href="https://joachimschuster.de/posts/android-studio-macos-tab-handling/" rel="alternate" type="text/html" title="Tabs for Android Studio (and other apps) on a Mac" /><published>2021-10-31T00:00:00+02:00</published><updated>2021-10-31T00:00:00+02:00</updated><id>https://joachimschuster.de/posts/android-studio-macos-tab-handling</id><content type="html" xml:base="https://joachimschuster.de/posts/android-studio-macos-tab-handling/"><![CDATA[<p>Those who have learned to love working with tabs instead of individual windows in Safari, for example, may want to use this in other apps as well. Finder and many other Mac apps support tabs, some better, some worse. Since macOS Mojave 10.14 at the latest, the behavior of all apps can be set in the <a href="https://support.apple.com/en-nz/guide/mac-help/mchla4695cce">General System Preferences</a>. Here you can specify when macOS should “convince” an app to first use tabs instead of windows.</p>
+
+<h1 id="prefer-tabs-always">Prefer tabs always</h1>
+
+<p>Go to <strong>Apple menu</strong>  &gt; <strong>System Preferences</strong>, then click <strong>General</strong> and set <strong>Prefer tabs:</strong> option to <strong>always</strong>.</p>
+
+<p><img src="../../assets/images/2021/2021-10-31-macos-system-preferences-general.png" alt="Screenshot of macOS General System Preferences" /></p>
+
+<p>Alternatively, for people who prefer the terminal</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write -g AppleWindowTabbingMode -string always
+</code></pre></div></div>
+
+<p>From now on, all applications that support this will open tabs instead of new windows.</p>
+
+<p>This way you can even teach Android Studio (or IntelliJ) to display all project windows in tabs (there is no menu entry or shortcut for this yet).</p>
+
+<p>SourceTree can also be set to start with all the tabs from the previous session - otherwise <a href="https://community.atlassian.com/t5/Sourcetree-questions/How-to-Start-SourceTree-for-Mac-with-Tabbed-Windows/qaq-p/627191">SourceTree always forgets</a> whether the windows are currently collected and displayed in tabs when exiting and restarting.</p>
+
+<h1 id="a-little-more-refinement">A little more refinement</h1>
+
+<p>For all the advantages that tabs bring, the above method is somewhat overarching. Not every application behaves as usual or as you would like it to with this setting. For example, the shortcut <kbd>⌘ Cmd</kbd> + <kbd>N</kbd> or the menu item <strong>New Window</strong> in Safari or Finder will open a tab in an existing window. So you can only create a new window by dragging out the newly created tab.</p>
+
+<p>Fortunately, many things can still be set in macOS via the command line tool ‘defaults’. And also for the tab handling, you can specify the behavior for individual apps.</p>
+
+<p>For example, you can set the tabbing mode to <code class="language-plaintext highlighter-rouge">always</code> only for Android Studio:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write -app "Android Studio" AppleWindowTabbingMode -string "always"
+</code></pre></div></div>
+
+<p>The values <code class="language-plaintext highlighter-rouge">manual</code>, <code class="language-plaintext highlighter-rouge">fullscreen</code> and <code class="language-plaintext highlighter-rouge">always</code> are available (by the way, <code class="language-plaintext highlighter-rouge">manual</code> corresponds to <em>never</em> in the System Preferences).</p>
+
+<p>If you want to read the setting for a specific app, you can do that with</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults read -app "Android Studio" AppleWindowTabbingMode
+</code></pre></div></div>
+
+<p>If you have not set a value explicitly for this app, you will get a corresponding message</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The domain/default pair of (com.google.android.studio, AppleWindowTabbingMode) does not exist
+</code></pre></div></div>
+
+<p>If a value is set, it is output</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>always
+</code></pre></div></div>
+
+<p>You can also use the following line to reset the special TabbingMode for an app</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults delete -app "Android Studio" AppleWindowTabbingMode
+</code></pre></div></div>
+
+<p>You can now set the behavior for all apps individually. Of course, you can also use it the other way around and set all apps to <strong>always</strong> in the System Preferences and exclude individual apps by setting <strong>manual</strong> via command line.</p>
+
+<div class="notice--info">
+  <p><strong>Info:</strong> For Finder it needs a slightly different usage - here the bundle identifier has to be used instead of the app name.</p>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.finder AppleWindowTabbingMode -string "manual"
+</code></pre></div>  </div>
+</div>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="macos" /><category term="android-studio" /><category term="helpful" /><summary type="html"><![CDATA[Those who have learned to love working with tabs instead of individual windows in Safari, for example, may want to use this in other apps as well. Finder and many other Mac apps support tabs, some better, some worse. Since macOS Mojave 10.14 at the latest, the behavior of all apps can be set in the General System Preferences. Here you can specify when macOS should “convince” an app to first use tabs instead of windows.]]></summary></entry><entry><title type="html">Android Studio as your standard diff and merge tool</title><link href="https://joachimschuster.de/posts/android-studio-as-diff-tool/" rel="alternate" type="text/html" title="Android Studio as your standard diff and merge tool" /><published>2021-10-06T00:00:00+02:00</published><updated>2024-02-15T11:00:00+01:00</updated><id>https://joachimschuster.de/posts/android-studio-as-diff-tool</id><content type="html" xml:base="https://joachimschuster.de/posts/android-studio-as-diff-tool/"><![CDATA[<p class="notice"><strong>Update 2024-02-15:</strong>  With Hedgehog, the installation process described in the section <a href="#install-command-line-launcher">Install command line launcher</a> has changed. I have created a <a href="/posts/android-studio-as-diff-tool-2024-way/">new blog post</a> on how to start Android Studio via the command line from now on.</p>
+
+<p>Android Studio (resp. <a href="https://www.jetbrains.com/help/idea/command-line-differences-viewer.html">IntelliJ IDEA</a>) provides a very good diff and merge tool. Android Studio can also be integrated into the terminal.</p>
+
+<p>This makes it ideal for integration into other tools like Git clients. I prefer Sourcetree, but that’s just a matter of taste and probably just a matter of getting used to it over the years.</p>
+
+<p>So integrating Android Studio with Sourcetree as a diff and merge tool only requires the <code class="language-plaintext highlighter-rouge">studio</code> launcher script.</p>
+
+<h2 id="install-command-line-launcher">Install command line launcher</h2>
+
+<p>In Android Studio open menu <strong>Tools</strong> &gt; <strong>Create Command Line Launcher…</strong> and confirm the installation to the default location with <strong>OK</strong>.</p>
+
+<p><img src="../../assets/images/2021/2021-10-06-android-studio-command-line-launcher-installer.png" alt="Android Studio Command-line Launcher" /></p>
+
+<p>This creates a script named <code class="language-plaintext highlighter-rouge">studio</code> in <code class="language-plaintext highlighter-rouge">/usr/local/bin</code> which should by default be in the <code class="language-plaintext highlighter-rouge">PATH</code> variable. So you can use it from any path in your terminal.</p>
+
+<p class="notice--warning"><strong>Note:</strong> If you have multiple Android Studio versions installed, keep in mind that the script will reference the instance you created the script from. <br />
+So, if you want to change Android Studio to a different location, you may need to recreate the script, which replaces the existing script with the new one.</p>
+
+<h2 id="configure-sourcetree">Configure Sourcetree</h2>
+
+<p>The Android Studio command line tool <code class="language-plaintext highlighter-rouge">studio</code> brings the parameters <code class="language-plaintext highlighter-rouge">diff</code> and <code class="language-plaintext highlighter-rouge">merge</code>.</p>
+
+<p>So for example you can compare two files by</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>studio diff first.txt second.txt
+</code></pre></div></div>
+
+<p>Integration with SauceTree is now simply setting the <strong>External Visual Diff Tool</strong> to <strong>Custom…</strong>  and <strong>Diff Command</strong> to <code class="language-plaintext highlighter-rouge">/usr/local/bin/studio</code>.
+The <strong>Arguments</strong> must be set to</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diff <span class="nv">$LOCAL</span> <span class="nv">$REMOTE</span>
+</code></pre></div></div>
+
+<p>The same applies to the <strong>Merge Tool</strong>, but with the <strong>Arguments</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>merge <span class="nv">$LOCAL</span> <span class="nv">$REMOTE</span> <span class="nv">$BASE</span> <span class="nv">$MERGED</span>
+</code></pre></div></div>
+
+<p>The Result should look like this</p>
+
+<p><img src="../../assets/images/2021/2021-10-06-sourcetree-preferences-diff-tool.png" alt="Sourcetree Preferences Diff Tool" /></p>
+
+<p>Now select a modified file in SauceTree and apply <strong>External Diff</strong> to it. Android Studio opens a extra diff window like this:</p>
+
+<p><img src="../../assets/images/2021/2021-10-06-android-studio-diff-view.png" alt="Android Studio Diff View" /></p>
+
+<p>Also in case of a merge conflict, you can use <strong>Resolve Conflicts</strong> &gt; <strong>Start External Merge Tool</strong> to bring up a merge window where you can systematically resolve the conflictl.</p>
+
+<h2 id="configure-git-command-line">Configure Git command line</h2>
+<p>Have a look at your gitconfig - you may want to use your new studio command line launcher to edit the file  😉</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>studio ~/.gitconfig
+</code></pre></div></div>
+<p>If you configured Sourcetree beforehand you will see, the Sourcetree configuration is embedded directly into your <code class="language-plaintext highlighter-rouge">.gitconfig</code> among other configurations.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+<span class="o">[</span>difftool <span class="s2">"sourcetree"</span><span class="o">]</span>
+    cmd <span class="o">=</span> /usr/local/bin/studio diff <span class="nv">$LOCAL</span> <span class="nv">$REMOTE</span>
+    path <span class="o">=</span> 
+<span class="o">[</span>mergetool <span class="s2">"sourcetree"</span><span class="o">]</span>
+    cmd <span class="o">=</span> /usr/local/bin/studio merge <span class="nv">$LOCAL</span> <span class="nv">$REMOTE</span> <span class="nv">$BASE</span> <span class="nv">$MERGED</span>
+    trustExitCode <span class="o">=</span> <span class="nb">true</span>
+...
+</code></pre></div></div>
+
+<p class="notice--info"><strong>Info:</strong> If you have <a href="#configure-saucetree">configured SauceTree</a> you should not modify the name behind <code class="language-plaintext highlighter-rouge">difftool</code> and <code class="language-plaintext highlighter-rouge">mergetool</code>  - Sourcetree will lose it’s connection and will create new entries in the file.<br />
+If you have not and do not want to, you can copy the snippet and replace the name “saucetree” with any other.</p>
+
+<p>Add the following line to use the <code class="language-plaintext highlighter-rouge">difftool</code> configuration from above also for the command line.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[diff]
+    tool = sourcetree
+</code></pre></div></div>
+
+<p>Now you can compare the changes of the modified file <code class="language-plaintext highlighter-rouge">foo.txt</code> with</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git difftool foo.txt
+</code></pre></div></div>
+
+<p>If you want to skip the <code class="language-plaintext highlighter-rouge">Launch 'sourcetree' [Y/n]?</code> every time you use <code class="language-plaintext highlighter-rouge">git difftool</code> add this lines to your <code class="language-plaintext highlighter-rouge">.gitconfig</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[difftool]
+    prompt = false
+</code></pre></div></div>
+
+<p>For the configuration as merge tool add the following lines</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[merge]
+    tool = sourcetree
+</code></pre></div></div>
+
+<p>You can find more configurations <a href="https://git-scm.com/book/sv/v2/Customizing-Git-Git-Configuration">in the Git community documentation</a>.</p>
+
+<div class="notice--info">
+  <p><strong>Info:</strong> You might run into the same question I did,<br />
+what is the difference between <code class="language-plaintext highlighter-rouge">git diff</code> is different to <code class="language-plaintext highlighter-rouge">git difftool</code>?</p>
+
+  <p><a href="https://stackoverflow.com/a/20951002/362182">This answer</a> to that question on Stack Overflow brings it to the point:</p>
+
+  <blockquote>
+    <p><code class="language-plaintext highlighter-rouge">git difftool</code> will use an external tool, while <code class="language-plaintext highlighter-rouge">git diff</code> will show the diff directly in the terminal.</p>
+  </blockquote>
+
+  <p>There are also ways to set a GUI diff tool for <code class="language-plaintext highlighter-rouge">git diff</code>. But you might need a terminal diff at some point, so I would keep that for this purpose.</p>
+</div>]]></content><author><name>Joachim Schuster</name></author><category term="Development" /><category term="android-studio" /><category term="terminal" /><summary type="html"><![CDATA[Update 2024-02-15: With Hedgehog, the installation process described in the section Install command line launcher has changed. I have created a new blog post on how to start Android Studio via the command line from now on.]]></summary></entry></feed>

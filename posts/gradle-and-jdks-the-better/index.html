@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/images/favicons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/images/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- begin _includes/seo.html --><title>Gradle 8 and JDK 17 upgrade - follow-ups - Joachim Schuster’s blog</title>
+<meta name="description" content="A couple of questions came up during the transition to Gradle 8 and thus the transition to JDK 17.">
+
+
+  <meta name="author" content="Joachim Schuster">
+  
+  <meta property="article:author" content="Joachim Schuster">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Joachim Schuster's blog">
+<meta property="og:title" content="Gradle 8 and JDK 17 upgrade - follow-ups">
+<meta property="og:url" content="https://joachimschuster.de/posts/gradle-and-jdks-the-better/">
+
+
+  <meta property="og:description" content="A couple of questions came up during the transition to Gradle 8 and thus the transition to JDK 17.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-08-13T00:00:00+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://joachimschuster.de/posts/gradle-and-jdks-the-better/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://joachimschuster.de/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Joachim Schuster's blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<script src="/assets/fontawesome-free-5.15.4-web/js/all.min.js"></script>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script async defer data-domain="joachimschuster.de" src="https://plausible.joachimschuster.de/js/plausible.js"></script>
+</head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          JS
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/posts/">Posts</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Joachim Schuster" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Joachim Schuster</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Mobile App Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://mastodon.social/@jschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/joachimschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/jschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Gradle 8 and JDK 17 upgrade - follow-ups">
+    <meta itemprop="description" content="A couple of questions came up during the transition to Gradle 8 and thus the transition to JDK 17.">
+    <meta itemprop="datePublished" content="2023-08-13T00:00:00+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Gradle 8 and JDK 17 upgrade - follow-ups
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-08-13T00:00:00+02:00">August 13, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-thing-with-the-target-version-briefly-explained">The thing with the target version briefly explained</a></li>
+<li><a href="#the-new-recommended-way---toolchain">The new recommended way - toolchain</a></li>
+<li><a href="#conclusion-and-recommendation">Conclusion and recommendation</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>A couple of questions came up during the <a href="/posts/gradle-and-jdks/">transition to Gradle 8 and thus the transition to JDK 17</a>.</p>
+
+<ol>
+  <li>What is the difference between setting target versions and using toolchain?</li>
+  <li>Recommended approach now in 2023?</li>
+  <li>can this work well with Java 17 on e.g. Android 7.0 (aka 24) devices (definitely don’t have a Java 17 compatible DVM yet)</li>
+</ol>
+
+<p>In this post I would like to clarify the first two questions directly (even if it must somehow fulfill the 3rd question, but more on that later).</p>
+
+<h1 id="the-thing-with-the-target-version-briefly-explained">The thing with the target version briefly explained</h1>
+
+<p>The Java or Kotlin compiler translates the sources into class files. These class files receive a version, which indicates to the executing JVM, which version it must have at least, in order to be able to execute the bytecode in it.</p>
+
+<p>With <code class="language-plaintext highlighter-rouge">targetCompatibility</code> or <code class="language-plaintext highlighter-rouge">jvmTarget</code> one determines the version, which are written into the Class files. So you can set a class file, which was created by Java compiler of the version 17 consciously nevertheless e.g. the target version 8.</p>
+
+<p>What for? You might want to make sure that the compiled code runs reliably on an old JVM 8 even though you want or have to use the more recent JDK 17 compiler.</p>
+
+<p>To make sure that you don’t accidentally use Java 11 or 17 language resources in your source code, there is another parameter <a href="https://developer.android.com/build/jdks#source-compat" rel="external nofollow noopener" target="_blank"><code class="language-plaintext highlighter-rouge">sourceCompatibility</code></a>. This parameter makes sure that the IDE linter will immediately react if you accidentally use a language feature of a newer Java version.</p>
+
+<p class="notice--info"><strong>Info:</strong> Specifying <code class="language-plaintext highlighter-rouge">targetCompatibility</code> does not do any conversion or similar magic. So you cannot simply use the latest Java 17 language tools and expect that by this setting then the compiler will generate from it bytecode compatible for e.g. JVM 8.<br>This also explains why <code class="language-plaintext highlighter-rouge">sourceCompatibility</code> <strong>must not be higher</strong> than <code class="language-plaintext highlighter-rouge">targetCompatibility</code>. It would calm down the linter and thus one could diligently use Java 17 language means in the code. When compiling with a Java 17 compiler, a valid class file would also still come out. But by setting the major version in the class file (via targetCompatibility) to Java 8, a JVM 8 would accept that but then fail on the Java 17 bytecode at runtime.</p>
+
+<h1 id="the-new-recommended-way---toolchain">The new recommended way - toolchain</h1>
+
+<p><a href="https://blog.gradle.org/java-toolchains" rel="external nofollow noopener" target="_blank">Gradle 6.7 itroduced the “Java toolchain support”</a> and has become so established that the <a href="https://developer.android.com/build/jdks#toolchain" rel="external nofollow noopener" target="_blank">Google doc also makes the clear recommendation</a> to rely on the toolchain specification. <a href="/posts/gradle-and-jdks/">The error output mentioned in the previous post</a> also suggests this solution.</p>
+
+<p>By specifying the toolchain, you tell Gradle which JDK and thus which compiler version you specifically want to use to compile the sources. It does not simply set the <code class="language-plaintext highlighter-rouge">targetCompatibility</code> in the class files, as described above. Gradle 8 can thus use any other JDK to compile the sources, whether that is the same JDK 17 or a completely different one.</p>
+
+<p>The advantage:</p>
+
+<ol>
+  <li>
+    <p>you can specify a specific version regardless of the JDK running Gradle, which will then be reliably maintained</p>
+  </li>
+  <li>
+    <p>since the setting of the toolchain then also set <code class="language-plaintext highlighter-rouge">targetCompatibilty</code>, <code class="language-plaintext highlighter-rouge">sourceCompatibilty</code> and <code class="language-plaintext highlighter-rouge">jvmTarget</code>, you can save these specifications</p>
+  </li>
+  <li>
+    <p>if one uses Kotlin (possibly also gladly mixed with Java), only the specification for the Kotlin compiler is sufficient</p>
+  </li>
+</ol>
+
+<p>So instead of setting 3 configurations via</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">compileOptions</span> <span class="o">{</span>
+   <span class="n">sourceCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_17</span>  
+   <span class="n">targetCompatibility</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_17</span>  
+<span class="o">}</span>
+
+<span class="n">kotlinOptions</span> <span class="o">{</span>  
+   <span class="n">jvmTarget</span> <span class="o">=</span> <span class="s1">'17'</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>you can replace it with just this one</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kotlin</span> <span class="o">{</span>  
+ <span class="err"> </span> <span class="err"> </span><span class="n">jvmToolchain</span> <span class="mi">17</span>  
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="notice--warning">
+
+  <p><strong>Note:</strong> If you use something else for the toolchain than the JDK that Gradle runs, you have to consider the following:<br></p>
+
+  <ol>
+    <li>make sure that this JDK is actually installed (possibly the only option for build servers whose setup cannot be changed dynamically). Gradle tries to determine <a href="https://docs.gradle.org/current/userguide/toolchains.html#sec:precedence" rel="external nofollow noopener" target="_blank">the best possible JDK version</a>.</li>
+    <li>use the so-called <a href="https://docs.gradle.org/current/userguide/toolchains.html#sub:download_repositories" rel="external nofollow noopener" target="_blank">Toolchein Resolver Pluign</a> - with it Grade downloads if necessary a JDK, if it does not find a suitable installed one.</li>
+  </ol>
+
+</div>
+
+<h1 id="conclusion-and-recommendation">Conclusion and recommendation</h1>
+
+<p>So the difference is with setting the target version, you really only set the target version in the class files. It is possible to use a different compiler intentionally or unintentionally. With toolchain you get what you specify.</p>
+
+<p>My personal recommendations:</p>
+<ol>
+  <li>
+    <p>if you have upgraded a project to the latest Gradle 8.2.1 + AGP 8.1, just set the <code class="language-plaintext highlighter-rouge">jvmToolchain</code> for Kotlin only</p>
+  </li>
+  <li>
+    <p>in addition you are free to also mix that with setting <code class="language-plaintext highlighter-rouge">sourceCompatibility</code>, <code class="language-plaintext highlighter-rouge">targetCompatibility</code>, or <code class="language-plaintext highlighter-rouge">jvmTarget</code></p>
+
+    <ul>
+      <li>
+        <p>either if you are still dealing with older AGP versions,  see warning in <a href="https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support" rel="external nofollow noopener" target="_blank">https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support</a></p>
+      </li>
+      <li>
+        <p>or because you just want to force the linter to warn you on using new language features</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>you can set the toolchain to JDK 17 - so you will avoid differences in JDK running Gradle and JDK compiling the code</p>
+  </li>
+</ol>
+
+<p class="notice--warning"><strong>Note:</strong> Not specifying anything at all is a bad choice, by the way: If you omit all specifications, Java version 8 will be assumed by default - not the compiler’s version, as you might think. And since this can also lead to unexpected behavior, it is advisable to specify something in any case.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#android" class="page__taxonomy-item" rel="tag">android</a><span class="sep">, </span>
+    
+      <a href="/tags/#gradle" class="page__taxonomy-item" rel="tag">gradle</a><span class="sep">, </span>
+    
+      <a href="/tags/#java" class="page__taxonomy-item" rel="tag">java</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#development" class="page__taxonomy-item" rel="tag">Development</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-08-13T00:00:00+02:00">August 13, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+    
+
+    <p class="page__meta">
+        This post is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<strong><i class="fab fa-fw fa-creative-commons fa-lg" aria-hidden="true"></i><i class="fab fa-fw fa-creative-commons-by fa-lg" aria-hidden="true"></i></strong></a>
+    </p>
+
+    <a href="https://twitter.com/intent/tweet?text=Gradle+8+and+JDK+17+upgrade+-+follow-ups%20https%3A%2F%2Fjoachimschuster.de%2Fposts%2Fgradle-and-jdks-the-better%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter" rel="external nofollow noopener" target="_blank"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjoachimschuster.de%2Fposts%2Fgradle-and-jdks-the-better%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook" rel="external nofollow noopener" target="_blank"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fjoachimschuster.de%2Fposts%2Fgradle-and-jdks-the-better%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn" rel="external nofollow noopener" target="_blank"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/posts/gradle-and-jdks/" class="pagination--pager" title="Gradle 8 and JDK 17 upgrade
+">Previous</a>
+    
+    
+      <a href="/posts/android-studio-as-diff-tool-2024-way/" class="pagination--pager" title="Android Studio as your standard diff and merge tool - 2024 Hedgehog update
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/android-studio-markdown-struggle-never-ends/" rel="permalink">Fix Markdown Plugin in Android Studio in 2024
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-25T00:00:00+02:00">April 25, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Android Studio has been having problems with the Markdown Plugin for some time now.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/android-studio-as-diff-tool-2024-way/" rel="permalink">Android Studio as your standard diff and merge tool - 2024 Hedgehog update
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-02-15T00:00:00+01:00">February 15, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With Android Studio Hedgehog, my now outdated blog post Android Studio as a standard diff and merge tool on the same topic unfortunately no longer works.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/gradle-and-jdks/" rel="permalink">Gradle 8 and JDK 17 upgrade
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-08-12T00:00:00+02:00">August 12, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Now that Gradle 8 and with it AGP 8 have been out for quite a while, we can finally dare to update the project to Gradle 8 as well.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/multiple-jdks-for-gradle-with-modified-cacerts/" rel="permalink">Use multiple JDKs for Gradle with common modified cacerts
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-31T00:00:00+02:00">May 31, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">You already use your project with another JDK than the one embedded by Android Studio and have to have some JDK versions in parallel. Thats no big deal.
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+      
+  
+      
+        
+          
+            <li><a href="https://mastodon.social/@jschuster" rel="me" target="_blank"><i class="fab fa-mastodon" aria-hidden="true"></i> Mastodon</a></li>
+          
+          
+        
+          
+          
+            <li><a href="https://twitter.com/joachimschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+          
+            <li><a href="https://github.com/jschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+  
+      
+        <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+      
+    </ul>
+  </div>
+  
+  <div class="page__footer-copyright">© 2024 Joachim Schuster's blog. Powered by <a href="https://jekyllrb.com" rel="nofollow" target="_blank">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow" target="_blank">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

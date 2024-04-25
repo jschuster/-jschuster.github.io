@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/images/favicons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/images/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- begin _includes/seo.html --><title>Fix Markdown Plugin in Android Studio Arctic Fox 2020.3.1 - Joachim Schuster’s blog</title>
+<meta name="description" content="Update 2024-05-25: The struggle continues. You can find another slightly customized guide for this Android Studio version in my post: Fix Markdown Plugin in Android Studio in 2024">
+
+
+  <meta name="author" content="Joachim Schuster">
+  
+  <meta property="article:author" content="Joachim Schuster">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Joachim Schuster's blog">
+<meta property="og:title" content="Fix Markdown Plugin in Android Studio Arctic Fox 2020.3.1">
+<meta property="og:url" content="https://joachimschuster.de/posts/android-studio-fix-markdown-plugin/">
+
+
+  <meta property="og:description" content="Update 2024-05-25: The struggle continues. You can find another slightly customized guide for this Android Studio version in my post: Fix Markdown Plugin in Android Studio in 2024">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-09-29T00:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2024-04-25T12:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="https://joachimschuster.de/posts/android-studio-fix-markdown-plugin/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://joachimschuster.de/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Joachim Schuster's blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<script src="/assets/fontawesome-free-5.15.4-web/js/all.min.js"></script>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script async defer data-domain="joachimschuster.de" src="https://plausible.joachimschuster.de/js/plausible.js"></script>
+</head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          JS
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/posts/">Posts</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Joachim Schuster" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Joachim Schuster</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Mobile App Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://mastodon.social/@jschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/joachimschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/jschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Fix Markdown Plugin in Android Studio Arctic Fox 2020.3.1">
+    <meta itemprop="description" content="Update 2024-05-25: The struggle continues. You can find another slightly customized guide for this Android Studio version in my post: Fix Markdown Plugin in Android Studio in 2024">
+    <meta itemprop="datePublished" content="2021-09-29T00:00:00+02:00">
+    <meta itemprop="dateModified" content="2024-04-25T12:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Fix Markdown Plugin in Android Studio Arctic Fox 2020.3.1
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-29T00:00:00+02:00">September 29, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#change-jbr-in-android-studio-to-fix-markdown-plugin">Change JBR in Android Studio to fix Markdown plugin</a></li>
+<li><a href="#bonus---mermaid-diagrams">Bonus - Mermaid diagrams</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p class="notice"><strong>Update 2024-05-25:</strong> The struggle continues. You can find another slightly customized guide for this Android Studio version in my post: <a href="/posts/android-studio-markdown-struggle-never-ends/">Fix Markdown Plugin in Android Studio in 2024</a></p>
+
+<p class="notice"><strong>Update 2022-07-31:</strong> Chipmunk has this problem again. You can find a slightly adapted tutorial for this Android Studio version in my post: <a href="/posts/android-studio-fix-markdown-plugin-again/">Fix Markdown Plugin in Android Studio Chipmunk 2021.2.1</a></p>
+
+<p>When editing a Markdown file, Android Studio suggests installing the <a href="https://plugins.jetbrains.com/plugin/7793-markdown" rel="external nofollow noopener" target="_blank">Markdown Plugin</a>. The <a href="https://www.jetbrains.com/help/idea/2020.3/markdown.html" rel="external nofollow noopener" target="_blank">IntelliJ IDEA 2020.3 Doku</a>  (Android Studio Arctic Fox 2020.3.1 is based on that version)  shows some nice shortcuts and screenshots.</p>
+
+<p>But after installing the Plugin you will see the editor with some nice coloring but no extra toolbar and no preview pane.</p>
+
+<p><img src="../../assets/images/2021/2021-09-29-android-studio-editor-markdown-without-preview.png" alt="Markdown Editor without preview pane"></p>
+
+<p>Also the <strong>Markdown</strong> preferences only show an error message.</p>
+
+<p><img src="../../assets/images/2021/2021-09-29-android-studio-preferences-markdown-empty.png" alt="Markdown Preferences empty preference view"></p>
+
+<p>Some research shows that the <a href="https://youtrack.jetbrains.com/issue/IDEA-255361" rel="external nofollow noopener" target="_blank">Markdown plugin does not work</a> properly as of Android Studio 4.1.</p>
+
+<p>A comment on a <a href="https://youtrack.jetbrains.com/issue/IDEA-269353" rel="external nofollow noopener" target="_blank">more recent jetbrains issue</a> notes that it is not an IntelliJ issue, but an <a href="https://issuetracker.google.com/issues/159933628" rel="external nofollow noopener" target="_blank">Android Studio issue</a> that is still not fixed. Also, a commenter in this issue mentions that JetBrains changed the <a href="https://blog.jetbrains.com/platform/2020/07/javafx-and-jcef-in-the-intellij-platform/" rel="external nofollow noopener" target="_blank">plugin dependencies</a> to require JCEF - <a href="https://plugins.jetbrains.com/docs/intellij/jcef.html" rel="external nofollow noopener" target="_blank">Java Chromium Embedded Framework</a> - which is pre-bundled in the JDK (aka JBR - <a href="https://confluence.jetbrains.com/display/JBR/JetBrains+Runtime" rel="external nofollow noopener" target="_blank">JetBrains Runtime</a>) with IntelliJ IDEA versions starting in 2020.2.</p>
+
+<p>So the solution would be for Google to bundle Android Studio with a JBR that integrates JCEF.</p>
+
+<p>Fortunately, the JBR can be changed and JetBrains makes the JBRs available for download. JetBrains even provides a <a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206544879-Selecting-the-JDK-version-the-IDE-will-run-under" rel="external nofollow noopener" target="_blank">Guide to change JBR</a>, but it does not fit well with Android Studio Arctic Fox.</p>
+
+<h2 id="change-jbr-in-android-studio-to-fix-markdown-plugin">Change JBR in Android Studio to fix Markdown plugin</h2>
+
+<p>So here are the steps to change the JBR in Android Studio:</p>
+
+<ul>
+  <li>
+    <p>Download a <a href="https://confluence.jetbrains.com/display/JBR/Release+notes+and+builds" rel="external nofollow noopener" target="_blank">current JBR</a> (e.g. Version <a href="https://confluence.jetbrains.com/pages/viewpage.action?pageId=218857477" rel="external nofollow noopener" target="_blank">11.0.11+9-b1341.60</a>)</p>
+  </li>
+  <li>Extract the Content to <code class="language-plaintext highlighter-rouge">~/Library/Java/JetBrainsRuntime</code>
+    <div class="language-bash highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="nv">file</span><span class="o">=</span>jbr_jcef-11_0_11-osx-x64-b1341.60.tar.gz
+<span class="nb">dir</span><span class="o">=</span>~/Library/Java/JetBrainsRuntime/<span class="k">${</span><span class="nv">file</span><span class="p">%.tar.gz</span><span class="k">}</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$dir</span>
+<span class="nb">tar</span> <span class="nt">-xzf</span> <span class="nv">$file</span> <span class="nt">-C</span> <span class="nv">$dir</span> <span class="nt">--strip-components</span><span class="o">=</span>1
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>In Android Studio open <strong>Preferences…</strong> &gt; <strong>Plugins</strong> and install the plugin “Choose Runtime” (no restart required)</p>
+  </li>
+  <li>
+    <p>open menu <strong>Help</strong> &gt; <strong>Find Action…</strong> (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>A</kbd>) and search for “Choose Runtime…” and execute</p>
+  </li>
+  <li>
+    <p>In the dialog press <strong>…</strong> and select the folder you extracted the JBR to (in case of the folder <em>~/Library/Java/…</em> it might be easier to open it in the Finder and drag and drop it into the dialog)
+<img src="../../assets/images/2021/2021-09-29-android-studio-dialog-choose-runtime-custom-jbr.png" alt="Choose Runtime dialog with custom jbr"></p>
+  </li>
+  <li>Install it - Android Studio will restart</li>
+</ul>
+
+<p>After restarting Android Studio, the Markdown plugin will be fully functional.</p>
+
+<p><img src="../../assets/images/2021/2021-09-29-android-studio-editor-markdown-with-preview.png" alt="Markdown Editor with preview pane"></p>
+
+<h2 id="bonus---mermaid-diagrams">Bonus - Mermaid diagrams</h2>
+
+<p>Enable Mermaid in the Markdown Preferences to support <a href="https://mermaid-js.github.io/" rel="external nofollow noopener" target="_blank">Mermaid diagrams</a> in your Markdown documents.
+If you haven’t heard of Mermaid yet, take a look at the <a href="https://mermaid-js.github.io/mermaid/#/examples" rel="external nofollow noopener" target="_blank">examples</a> to get an idea of what is possible with Mermaid.</p>
+
+<p>To enable the rendering of Mermaid diagrams, open <strong>Preferences…</strong> &gt; <strong>Languages &amp; Frameworks</strong> &gt; <strong>Markdown</strong> and set the checkbox at <em>Mermaid</em>.</p>
+
+<p><img src="../../assets/images/2021/2021-09-29-android-studio-preferences-markdown-mermaid.png" alt="Markdown Preferences activate Mermaid support"></p>
+
+<p>Using a code block with Mermaid syntax will be rendered in the preview pane.</p>
+
+<p><img src="../../assets/images/2021/2021-09-29-android-studio-editor-markdown-mermaid-preview.png" alt="Markdown Editor with Mermaid preview"></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#android-studio" class="page__taxonomy-item" rel="tag">android-studio</a><span class="sep">, </span>
+    
+      <a href="/tags/#terminal" class="page__taxonomy-item" rel="tag">terminal</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#development" class="page__taxonomy-item" rel="tag">Development</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-25">April 25, 2024</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+    
+
+    <p class="page__meta">
+        This post is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<strong><i class="fab fa-fw fa-creative-commons fa-lg" aria-hidden="true"></i><i class="fab fa-fw fa-creative-commons-by fa-lg" aria-hidden="true"></i></strong></a>
+    </p>
+
+    <a href="https://twitter.com/intent/tweet?text=Fix+Markdown+Plugin+in+Android+Studio+Arctic+Fox+2020.3.1%20https%3A%2F%2Fjoachimschuster.de%2Fposts%2Fandroid-studio-fix-markdown-plugin%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter" rel="external nofollow noopener" target="_blank"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjoachimschuster.de%2Fposts%2Fandroid-studio-fix-markdown-plugin%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook" rel="external nofollow noopener" target="_blank"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fjoachimschuster.de%2Fposts%2Fandroid-studio-fix-markdown-plugin%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn" rel="external nofollow noopener" target="_blank"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/posts/debug-on-device-rsa-fingerprint/" class="pagination--pager" title="Check the computer’s RSA key fingerprint
+">Previous</a>
+    
+    
+      <a href="/posts/android-studio-terminal/" class="pagination--pager" title="Android (Studio) and the terminal
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/android-studio-markdown-struggle-never-ends/" rel="permalink">Fix Markdown Plugin in Android Studio in 2024
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-25T00:00:00+02:00">April 25, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Android Studio has been having problems with the Markdown Plugin for some time now.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/android-studio-as-diff-tool-2024-way/" rel="permalink">Android Studio as your standard diff and merge tool - 2024 Hedgehog update
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-02-15T00:00:00+01:00">February 15, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With Android Studio Hedgehog, my now outdated blog post Android Studio as a standard diff and merge tool on the same topic unfortunately no longer works.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/gradle-and-jdks-the-better/" rel="permalink">Gradle 8 and JDK 17 upgrade - follow-ups
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-08-13T00:00:00+02:00">August 13, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A couple of questions came up during the transition to Gradle 8 and thus the transition to JDK 17.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/gradle-and-jdks/" rel="permalink">Gradle 8 and JDK 17 upgrade
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-08-12T00:00:00+02:00">August 12, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Now that Gradle 8 and with it AGP 8 have been out for quite a while, we can finally dare to update the project to Gradle 8 as well.
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+    <ul class="social-icons">
+      
+  
+      
+        
+          
+            <li><a href="https://mastodon.social/@jschuster" rel="me" target="_blank"><i class="fab fa-mastodon" aria-hidden="true"></i> Mastodon</a></li>
+          
+          
+        
+          
+          
+            <li><a href="https://twitter.com/joachimschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+          
+            <li><a href="https://github.com/jschuster" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+  
+      
+        <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+      
+    </ul>
+  </div>
+  
+  <div class="page__footer-copyright">© 2024 Joachim Schuster's blog. Powered by <a href="https://jekyllrb.com" rel="nofollow" target="_blank">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow" target="_blank">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
